@@ -120,7 +120,7 @@ const ISCO=180.0;/* ISCO = 3Rs (Schwarzschild) */
 const DISK_OUTER=950.0;
 const scene=new THREE.Scene();
 const camera=new THREE.PerspectiveCamera(58,innerWidth/innerHeight,0.1,60000);
-const renderer=new THREE.WebGLRenderer({antialias:true,powerPreference:'high-performance'});
+const renderer=new THREE.WebGLRenderer({antialias:!LOWP,powerPreference:'high-performance'});
 renderer.setPixelRatio(LOWP?1:Math.min(devicePixelRatio,1.5));
 renderer.setSize(innerWidth,innerHeight);
 renderer.outputColorSpace=THREE.SRGBColorSpace;
