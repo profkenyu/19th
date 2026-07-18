@@ -102,7 +102,7 @@ window.__THREE_OK=1;
 const scene=new THREE.Scene();
 scene.fog=new THREE.FogExp2(0x000000,0.00035);
 const camera=new THREE.PerspectiveCamera(70,innerWidth/innerHeight,0.1,80000);
-const renderer=new THREE.WebGLRenderer({antialias:true});
+const renderer=new THREE.WebGLRenderer({antialias:!LOWP});
 renderer.setPixelRatio(LOWP?1:Math.min(devicePixelRatio,1.5));
 renderer.setSize(innerWidth,innerHeight);
 document.body.appendChild(renderer.domElement);

@@ -172,9 +172,9 @@ scene.fog=new THREE.FogExp2(0x020208,0.004);
 const camera=new THREE.PerspectiveCamera(60,innerWidth/innerHeight,0.1,1000);
 camera.position.set(0,20,160);
 
-const renderer=new THREE.WebGLRenderer({antialias:true});
+const renderer=new THREE.WebGLRenderer({antialias:!LOWP});
 renderer.setSize(innerWidth,innerHeight);
-renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.setPixelRatio(LOWP?1:Math.min(devicePixelRatio,1.5));
 document.body.appendChild(renderer.domElement);
 
 const COUNT=LOWP?25000:60000;
