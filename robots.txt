@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://kimgunwoo.kr/19th/sitemap.xml
+https://profkenyu.github.io/19th/sitemap.xml
