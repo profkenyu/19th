@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-https://profkenyu.github.io/19th/sitemap.xml
+Sitemap: https://profkenyu.github.io/19th/sitemap.xml
