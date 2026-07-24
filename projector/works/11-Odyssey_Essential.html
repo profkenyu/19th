@@ -222,6 +222,7 @@ camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.se
     var tries=0;
   var iv=setInterval(function(){
     tries++;
+    if(tries>60){clearInterval(iv);return;}/* 60초 후 폴링 중단 — RETRY 버튼은 유지 */
     if(window.__THREE_OK){clearInterval(iv);var o=document.getElementById('net-fail');if(o)o.remove();return;}
     if(tries===7){if(document.body.classList.contains('embed')){location.reload();return;}
       var o=document.createElement('div');
@@ -243,7 +244,7 @@ camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.se
   window.addEventListener('pageshow',kicks);
   if(window.visualViewport)visualViewport.addEventListener('resize',kick);
   if(window.matchMedia){try{matchMedia('(orientation:landscape)').addEventListener('change',kicks)}catch(e){}}
-  setInterval(function(){if(innerWidth!==w||innerHeight!==h)kick()},700);
+  setInterval(function(){if(document.hidden)return;if(innerWidth!==w||innerHeight!==h)kick()},700);
   if(document.readyState==='complete'){kicks();}else{window.addEventListener('load',kicks);}
 })();
 </script>

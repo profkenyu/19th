@@ -370,7 +370,7 @@ const core = new THREE.Mesh(
 );
 scene.add(core);
 
-let audioContext, analyser, dataArray;
+let audioContext, analyser, dataArray, micStream = null, micMsgTimer;
 let isAudioActive = false;
 let bass = 0, mid = 0, high = 0;
 
@@ -379,10 +379,14 @@ const valBass = document.getElementById('val-bass');
 const valHigh = document.getElementById('val-high');
 
 audioBtn.addEventListener('click', async () => {
+    clearTimeout(micMsgTimer);
+    const guideEl = document.getElementById('guide-overlay');
+    guideEl.style.color = '';
     if (!isAudioActive) {
         try {
 
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+            micStream = stream;
             audioContext = new (window.AudioContext || window.webkitAudioContext)();
             analyser = audioContext.createAnalyser();
             analyser.fftSize = 256;
@@ -398,9 +402,20 @@ audioBtn.addEventListener('click', async () => {
             audioBtn.classList.add('active');
             document.getElementById('guide-overlay').innerText = "[ AUDIO ACTIVE - MAKE SOUND TO DISTORT NEBULA ]";
         } catch (err) {
-            alert("마이크 오디오 권한 허용이 필요합니다: " + err.message);
+            console.warn("mic permission needed: " + err.message);
+            /* 키오스크 화면을 막는 alert 대신 기존 안내줄에 표시 */
+            guideEl.innerText = "[ 마이크 권한 허용이 필요합니다 · MICROPHONE PERMISSION REQUIRED ]";
+            guideEl.style.color = "rgba(255,51,102,.9)";
+            micMsgTimer = setTimeout(() => {
+                guideEl.innerText = "[ ACTIVATE AUDIO TO EXPERIENCE AUDIO-REACTIVE NEBULA ]";
+                guideEl.style.color = "";
+            }, 4000);
         }
     } else {
+        if (micStream) {
+            micStream.getTracks().forEach(t => t.stop());
+            micStream = null;
+        }
         if (audioContext) {
             audioContext.close();
         }
@@ -589,6 +604,7 @@ window.addEventListener('resize', ()=>{
   var tries=0;
   var iv=setInterval(function(){
     tries++;
+    if(tries>60){clearInterval(iv);return;}/* 60초 후 폴링 중단 — RETRY 버튼은 유지 */
     if(window.__THREE_OK){clearInterval(iv);var o=document.getElementById('net-fail');if(o)o.remove();return;}
     if(tries===7){
       var o=document.createElement('div');
@@ -610,7 +626,7 @@ window.addEventListener('resize', ()=>{
   window.addEventListener('pageshow',kicks);
   if(window.visualViewport)visualViewport.addEventListener('resize',kick);
   if(window.matchMedia){try{matchMedia('(orientation:landscape)').addEventListener('change',kicks)}catch(e){}}
-  setInterval(function(){if(innerWidth!==w||innerHeight!==h)kick()},700);
+  setInterval(function(){if(document.hidden)return;if(innerWidth!==w||innerHeight!==h)kick()},700);
   if(document.readyState==='complete'){kicks();}else{window.addEventListener('load',kicks);}
 })();
 </script>
