@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>2026: a digital odyssey — 프로젝터 상영</title>
+<link rel="icon" href="works/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400&family=Noto+Sans+KR:wght@200;300;400&family=JetBrains+Mono:wght@300&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;background:#000;overflow:hidden;
+  font-family:Inter,'Noto Sans KR',sans-serif;color:rgba(255,255,255,.85)}
+body.hidecursor, body.hidecursor *{cursor:none!important}
+
+iframe.stage{position:fixed;inset:0;width:100%;height:100%;border:0;background:#000;
+  opacity:0;transition:opacity 1.4s ease;pointer-events:none}
+iframe.stage.on{opacity:1}
+body.interactive iframe.stage.on{pointer-events:auto}
+
+/* ── 작품 사이 타이틀 카드 ── */
+#card{position:fixed;inset:0;z-index:50;background:#000;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;gap:26px;padding:0 8vw;
+  opacity:0;pointer-events:none;transition:opacity 1.1s ease}
+#card.show{opacity:1;pointer-events:auto}
+#card .no{font-weight:200;font-size:15px;letter-spacing:.55em;text-indent:.55em;color:rgba(255,255,255,.38)}
+#card .tt{font-weight:200;font-size:clamp(30px,4.2vw,58px);letter-spacing:.14em;color:rgba(255,255,255,.94)}
+#card .po{font-weight:300;font-size:clamp(14px,1.35vw,19px);letter-spacing:.12em;color:rgba(255,255,255,.55);line-height:2}
+#card .fm{font-family:'JetBrains Mono',monospace;font-weight:300;font-size:clamp(11px,1vw,14px);
+  letter-spacing:.08em;color:rgba(120,170,255,.45);margin-top:8px}
+#card .line{width:52px;height:1px;background:rgba(255,255,255,.22)}
+
+/* ── 시작 화면 ── */
+#start{position:fixed;inset:0;z-index:100;background:#000;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;gap:30px;padding:0 7vw;cursor:pointer;
+  transition:opacity 1s ease}
+#start.gone{opacity:0;pointer-events:none}
+#start .ex{font-weight:200;font-size:13px;letter-spacing:.5em;text-indent:.5em;color:rgba(255,255,255,.4)}
+#start h1{font-weight:200;font-size:clamp(26px,3.6vw,50px);letter-spacing:.16em;color:rgba(255,255,255,.92)}
+#start .sub{font-weight:300;font-size:clamp(13px,1.2vw,17px);letter-spacing:.14em;color:rgba(255,255,255,.5);line-height:2.1}
+#start .go{margin-top:14px;border:1px solid rgba(255,255,255,.28);border-radius:4px;
+  padding:13px 34px;font-size:12px;letter-spacing:.34em;text-indent:.34em;color:rgba(255,255,255,.75)}
+#start .keys{font-size:11px;letter-spacing:.1em;color:rgba(255,255,255,.32);line-height:2.2}
+#start .keys b{font-weight:400;color:rgba(255,255,255,.55)}
+
+/* ── HUD · 일시정지 표시 ── */
+#hud{position:fixed;left:26px;bottom:22px;z-index:60;font-size:12px;letter-spacing:.14em;
+  color:rgba(255,255,255,.65);background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.14);
+  border-radius:4px;padding:9px 14px;display:none;line-height:1.9}
+body.hud #hud{display:block}
+#paused{position:fixed;right:26px;bottom:22px;z-index:60;font-size:11px;letter-spacing:.3em;text-indent:.3em;
+  color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.25);border-radius:4px;
+  padding:8px 14px;display:none}
+body.paused #paused{display:block}
+</style>
+</head>
+<body>
+
+<iframe class="stage" id="fa" title="artwork" allow="autoplay; microphone *"></iframe>
+<iframe class="stage" id="fb" title="artwork" allow="autoplay; microphone *"></iframe>
+
+<div id="card" aria-hidden="true">
+  <div class="no"></div>
+  <div class="tt"></div>
+  <div class="line"></div>
+  <div class="po"></div>
+  <div class="fm"></div>
+</div>
+
+<div id="hud"></div>
+<div id="paused">PAUSED · 일시정지</div>
+
+<div id="start">
+  <div class="ex">김건우 제19회 개인전 · 갤러리한빛</div>
+  <h1>2026: a digital odyssey</h1>
+  <div class="sub">심연의 방정식 — 15작품 순환 상영<br>프로젝터 전용 플레이리스트</div>
+  <div class="go">클릭하여 전체화면으로 시작</div>
+  <div class="keys">
+    <b>Space</b> 일시정지 &nbsp;·&nbsp; <b>← →</b> 이전/다음 작품 &nbsp;·&nbsp; <b>F</b> 전체화면
+    &nbsp;·&nbsp; <b>H</b> 상태 표시 &nbsp;·&nbsp; <b>I</b> 마우스 조작 허용<br>
+    작품 로딩에 인터넷 연결이 필요합니다 (Three.js CDN)<br>
+    사운드 작품(08·14·15)은 자동으로 소리·마이크가 켜집니다 — 첫 시작 시 마이크 허용을 눌러 주세요
+  </div>
+</div>
+
+<script>
+/* ══════════════ 설정 ══════════════
+   DEFAULT_DUR : 작품당 상영 시간(초). URL로도 변경 가능 → index.html?dur=180
+   dur:  개별 작품만 다르게 하려면 아래 목록의 dur 값을 수정 (null = 기본값 사용)
+   CARD_MS : 작품 사이 타이틀 카드 최소 표시 시간(ms)
+   URL 옵션:  ?dur=초  ·  ?start=작품번호(1~15)                         */
+const DEFAULT_DUR = 120;
+const CARD_MS     = 6000;
+const SETTLE_MS   = 1800;   // 작품 로드 후 화면 공개까지 여유(ms)
+const LOAD_TIMEOUT= 12000;  // 로드 이벤트 대기 한도(ms)
+
+const WORKS = [
+ {n:'01',file:'works/01-RGB_Galaxy.html',        title:'RGB Galaxy Engine',         poetic:'우주는 하나의 빛에서 시작된다.',            formula:'r = √i × 1.6 · θ = i × 0.013 + arm × 2π/3', dur:null},
+ {n:'02',file:'works/02-Hyperbolic_Nebula.html', title:'Hyperbolic Nebula',         poetic:'성운은 계산되는 안개이다.',                  formula:'z = sinh(u)·cosh(v) − tanh(r)',              dur:null},
+ {n:'03',file:'works/03-Riemann_dream.html',     title:'Riemann Dreams',            poetic:'증명되지 않은 우주가 흔들린다.',             formula:'θ = i × 0.045 + sin(p) × 2',                 dur:null},
+ {n:'04',file:'works/04-Quantum_sing.html',      title:'Quantum Singularity',       poetic:'특이점은 중심이 아니라 붕괴이다.',           formula:'θ = p · 2π/137.507 · r = √p × 12',           dur:null},
+ {n:'05',file:'works/05-Dual_Galaxy.html',       title:'Dual Galaxy',               poetic:'두 개의 중력장이 서로를 뒤틀기 시작한다.',  formula:'r = √i × 1.2 · θ = i × 0.015',               dur:null},
+ {n:'06',file:'works/06-Lambert_Essential.html', title:'Lambert Nebula: Essential', poetic:'빛은 회전하면서 확산된다.',                  formula:'W₀(x) · FogExp2(density = 0.0025)',          dur:null},
+ {n:'07',file:'works/07-Lambert_Archive.html',   title:'Lambert Nebula: Archive',   poetic:'가산되는 빛은 심연이 된다.',                 formula:'W₀ ∪ W₋₁ · Additive Blending',               dur:null},
+ {n:'08',file:'works/08-Lambert_nebu.html',      title:'Lambert Nebula',            poetic:'사운드는 공간을 조각한다.',                  formula:'W₀(x) ∪ W₋₁(x)',                             dur:null},
+ {n:'09',file:'works/09-Bessel_bloom.html',      title:'Bessel Bloom',              poetic:'파동은 충돌하며 꽃처럼 피어난다.',           formula:'z = Σ J₀(dₙ · 0.7 − 3t)',                    dur:null},
+ {n:'10',file:'works/10-Lorenz_butt.html',       title:'Lorenz Butterfly',          poetic:'카오스는 질서의 또 다른 이름이다.',         formula:'ẋ = σ(y − x) · ẏ = x(ρ − z) − y',            dur:null},
+ {n:'11',file:'works/11-Odyssey_Essential.html', title:'Odyssey: Essential',        poetic:'별들은 관측자의 시점을 따라 이동한다.',      formula:'ω(r) = 35/r · Photon Ring',                  dur:null},
+ {n:'12',file:'works/12-Odyssey_Archive.html',   title:'Odyssey: Archive',          poetic:'기억된 우주가 끝없이 확장된다.',             formula:'Rₛ = 2GM/c²',                                dur:null},
+ {n:'13',file:'works/13-Event_Horizon.html',     title:'Event Horizon',             poetic:'빛조차 돌아오지 못하는 경계.',               formula:'ω ∝ r⁻³ᐟ² · dτ = √(1−Rₛ/r)·dt',              dur:null},
+ {n:'14',file:'works/14-Black_Voyage.html',      title:'Black Hole Voyage',         poetic:'붕괴는 가장 거대한 음악이다.',               formula:'Δθ ∝ e^(-r/260.0) · Cycle = 180s',           dur:190},
+ {n:'15',file:'works/15-Kerr_Plasma.html',       title:'Kerr Plasma Cathedral',     poetic:'모든 입자는 결국 침묵 속으로 사라진다.',     formula:'ds² = −(1 − rₛr/ρ²)dt² + …',                 dur:null}
+];
+/* ══════════════ 설정 끝 ══════════════ */
+
+const qs = new URLSearchParams(location.search);
+const DUR_OVERRIDE = parseInt(qs.get('dur'), 10) || null;
+let idx = Math.min(15, Math.max(1, parseInt(qs.get('start'), 10) || 1)) - 1;
+
+const fa = document.getElementById('fa'), fb = document.getElementById('fb');
+const card = document.getElementById('card'), hud = document.getElementById('hud');
+let active = fa, standby = fb;
+let started = false, paused = false, transitioning = false;
+let slotTimer = null, slotEndsAt = 0, slotRemain = 0;
+
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const durOf = w => (DUR_OVERRIDE || w.dur || DEFAULT_DUR) * 1000;
+
+function loadInto(frame, url){
+  return new Promise(resolve => {
+    let done = false;
+    const finish = () => { if(!done){ done = true; frame.removeEventListener('load', finish); resolve(); } };
+    frame.addEventListener('load', finish);
+    setTimeout(finish, LOAD_TIMEOUT);
+    frame.src = url;
+  });
+}
+
+function fillCard(w){
+  card.querySelector('.no').textContent = 'WORK ' + w.n + ' / 15';
+  card.querySelector('.tt').textContent = w.title;
+  card.querySelector('.po').textContent = w.poetic;
+  card.querySelector('.fm').textContent = w.formula;
+}
+
+async function showWork(i){
+  if(transitioning) return;
+  transitioning = true;
+  clearTimeout(slotTimer);
+  idx = (i + WORKS.length) % WORKS.length;
+  const w = WORKS[idx];
+
+  fillCard(w);
+  card.classList.add('show');
+  const cardShownAt = performance.now();
+  await sleep(1150); // 카드 페이드인 완료 후 뒤에서 교체
+
+  /* 카드가 화면을 완전히 덮은 시점 — 이전 작품(영상+사운드)을 즉시 종료 */
+  active.classList.remove('on');
+  active.src = 'about:blank';
+  await loadInto(standby, w.file + '?embed=1');
+  await sleep(SETTLE_MS);
+
+  const remainCard = CARD_MS - (performance.now() - cardShownAt);
+  if(remainCard > 0) await sleep(remainCard);
+
+  standby.classList.add('on');
+  const t = active; active = standby; standby = t;
+
+  card.classList.remove('show');
+  transitioning = false;
+
+  slotRemain = durOf(w);
+  if(!paused) armTimer();
+  updateHud();
+}
+
+function armTimer(){
+  clearTimeout(slotTimer);
+  slotEndsAt = performance.now() + slotRemain;
+  slotTimer = setTimeout(() => showWork(idx + 1), slotRemain);
+}
+
+function togglePause(){
+  if(!started || transitioning) return;
+  paused = !paused;
+  document.body.classList.toggle('paused', paused);
+  if(paused){
+    clearTimeout(slotTimer);
+    slotRemain = Math.max(0, slotEndsAt - performance.now());
+  } else armTimer();
+  updateHud();
+}
+
+function updateHud(){
+  if(!document.body.classList.contains('hud')) return;
+  const w = WORKS[idx];
+  const left = paused ? slotRemain : Math.max(0, slotEndsAt - performance.now());
+  const m = Math.floor(left / 60000), s = Math.floor(left % 60000 / 1000);
+  hud.innerHTML = 'WORK ' + w.n + ' / 15 — ' + w.title +
+    '<br>남은 시간 ' + m + ':' + String(s).padStart(2, '0') +
+    (paused ? ' · 일시정지' : '') +
+    (document.body.classList.contains('interactive') ? ' · 마우스 조작 ON' : '');
+}
+setInterval(updateHud, 1000);
+
+/* ── 화면 꺼짐 방지 (Wake Lock) ── */
+let wakeLock = null;
+async function keepAwake(){
+  try{
+    wakeLock = await navigator.wakeLock.request('screen');
+    wakeLock.addEventListener('release', () => { wakeLock = null; });
+  }catch(e){}
+}
+document.addEventListener('visibilitychange', () => {
+  if(started && document.visibilityState === 'visible' && !wakeLock) keepAwake();
+});
+
+/* ── 시작 ── */
+document.getElementById('start').addEventListener('click', () => {
+  if(started) return;
+  started = true;
+  document.documentElement.requestFullscreen && document.documentElement.requestFullscreen().catch(()=>{});
+  keepAwake();
+  document.getElementById('start').classList.add('gone');
+  showWork(idx);
+});
+
+/* ── 키보드 ── */
+document.addEventListener('keydown', e => {
+  if(!started) return;
+  if(e.code === 'Space'){ e.preventDefault(); togglePause(); }
+  else if(e.key === 'ArrowRight' || e.key === 'Right'){ showWork(idx + 1); }
+  else if(e.key === 'ArrowLeft' || e.key === 'Left'){ showWork(idx - 1); }
+  else if(e.key === 'f' || e.key === 'F'){
+    document.fullscreenElement ? document.exitFullscreen() :
+      document.documentElement.requestFullscreen().catch(()=>{});
+  }
+  else if(e.key === 'h' || e.key === 'H'){ document.body.classList.toggle('hud'); updateHud(); }
+  else if(e.key === 'i' || e.key === 'I'){ document.body.classList.toggle('interactive'); updateHud(); }
+});
+
+/* ── 마우스 커서 자동 숨김 ── */
+let cursorTimer = null;
+document.addEventListener('mousemove', () => {
+  document.body.classList.remove('hidecursor');
+  clearTimeout(cursorTimer);
+  if(started) cursorTimer = setTimeout(() => document.body.classList.add('hidecursor'), 3000);
+});
+</script>
+</body>
+</html>
