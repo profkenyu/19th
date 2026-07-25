@@ -1,0 +1,326 @@
+════════════════════════════════════════════════════════════════════
+ 2026: a digital odyssey — 심연의 방정식
+ 김건우교수 제19회 개인전 · 2026.08.24–09.05 · 갤러리한빛
+ 작품 설명 및 시적 문구 (한/영)
+════════════════════════════════════════════════════════════════════
+
+전시 서사 — 15편의 작품은 하나의 항해입니다. 빛의 탄생(01)에서 출발해
+수학적 구조의 각성(03–04), 중력의 등장(05), 공간의 굴절(06–08),
+방정식만 남는 순간(09–10), 생명과 의식의 자기조직(11–12)을 지나
+사건의 지평선(13–14)을 넘고, 마지막 침묵(15)에 다다릅니다.
+
+
+────────────────────────────────────────
+ 01 · RGB GALAXY ENGINE
+────────────────────────────────────────
+[설명 · KR]
+세 개의 나선팔을 가진 은하가 25만 개의 빛 입자로 태어난다. 각 팔은
+RGB 색상환을 따라 순환하며, 은하 전체가 하나의 거대한 색-엔진처럼
+회전한다. 마우스를 움직이면 관측자의 시선이 은하 주위를 유영한다.
+모든 우주는 하나의 빛에서 시작된다 — 이 작품은 그 첫 점화의 순간이다.
+
+[설명 · EN]
+A galaxy of three spiral arms is born from 250,000 particles of light.
+Each arm cycles through the RGB color wheel, turning the whole galaxy
+into a vast engine of color. Move the mouse and your gaze drifts around
+the newborn universe — the moment of first ignition.
+
+[시적 문구 · KR]  우주는 하나의 빛에서 시작된다.
+[시적 문구 · EN]  Birth of light. Every universe begins as a single spark.
+
+
+────────────────────────────────────────
+ 02 · HYPERBOLIC NEBULA
+────────────────────────────────────────
+[설명 · KR]
+쌍곡함수 sinh·cosh·tanh가 빚어낸 성운. 수만 개의 입자가 쌍곡면의
+곡률을 따라 소용돌이치고, 그 바깥을 절차적 노이즈로 계산된 가스 구름이
+감싼다. 성운은 그려지는 것이 아니라 계산되는 안개다 — 수식이 안개가
+되고, 안개가 공간이 된다.
+
+[설명 · EN]
+A nebula sculpted by the hyperbolic functions sinh, cosh and tanh.
+Tens of thousands of particles swirl along hyperbolic curvature,
+wrapped in a procedural-noise gas shell. This nebula is not drawn
+but computed — an equation condensing into fog, fog into space.
+
+[시적 문구 · KR]  성운은 계산되는 안개이다.
+[시적 문구 · EN]  Light gathers. The nebula is a fog that computes itself.
+
+
+────────────────────────────────────────
+ 03 · RIEMANN DREAMS
+────────────────────────────────────────
+[설명 · KR]
+300개의 소수(素數)가 나선의 격자 위에 흩어져 파도처럼 출렁인다.
+리만 가설 — 아직 증명되지 않은 우주의 질서 — 위에 세워진 바다.
+화면을 클릭하면 그 지점에서 소수의 파문이 피어난다. 증명되지 않았기에
+이 우주는 아직 꿈처럼 흔들리고 있다.
+
+[설명 · EN]
+Three hundred prime numbers scatter across a spiral lattice, heaving
+like an ocean. A sea built upon the Riemann Hypothesis — an order of
+the universe not yet proven. Click, and a ripple of primes blooms at
+your fingertip. Unproven, this universe still trembles like a dream.
+
+[시적 문구 · KR]  증명되지 않은 우주가 흔들린다.
+[시적 문구 · EN]  Patterns emerge. An unproven universe still trembles.
+
+
+────────────────────────────────────────
+ 04 · QUANTUM SINGULARITY
+────────────────────────────────────────
+[설명 · KR]
+3,000개의 소수가 황금각(137.5°)을 따라 나선으로 감기고, 40만 개의
+성운 입자가 그 붕괴를 지켜본다. 작품은 30분(1,800초)의 진화 주기를
+갖는다 — ERA OF GENESIS에서 RIEMANN CHRONICLES, HYPERBOLIC
+CATHEDRAL, QUANTUM SINGULARITY를 지나 THERMODYNAMIC DEATH(열죽음)
+까지, 창세에서 열죽음에 이르는 다섯 국면을 순환한다. 특이점은
+공간의 중심이 아니라, 구조가 스스로 무너지는 사건이다.
+
+[설명 · EN]
+Three thousand primes coil along the golden angle (137.5°) while
+400,000 nebula particles witness the collapse. The work evolves
+through a 30-minute cycle of five eras — from the Era of Genesis
+through the Riemann Chronicles, the Hyperbolic Cathedral and the
+Quantum Singularity into Thermodynamic Death. A singularity is not
+a center of space; it is the event of structure collapsing into
+itself.
+
+[시적 문구 · KR]  특이점은 중심이 아니라 붕괴이다.
+[시적 문구 · EN]  Geometry awakens. The singularity is not a place — it is a collapse.
+
+
+────────────────────────────────────────
+ 05 · DUAL GALAXY
+────────────────────────────────────────
+[설명 · KR]
+서로 다른 색을 지닌 두 은하가 하나의 중력장 안에서 마주 돈다.
+12만 개의 입자가 두 나선을 오가며 궤도를 교환하고, 카메라는 두 은하
+사이를 스스로 항해한다. 충돌이 아니라 대화 — 두 중력장이 서로를
+뒤틀며 새로운 형태를 만들어 가는 긴 춤이다.
+
+[설명 · EN]
+Two galaxies of different colors circle each other inside a single
+gravitational field. 120,000 particles trade orbits between the twin
+spirals as the camera sails between them. Not a collision but a
+conversation — two gravities slowly warping each other into new form.
+
+[시적 문구 · KR]  두 개의 중력장이 서로를 뒤틀기 시작한다.
+[시적 문구 · EN]  Gravity begins. Two fields bend each other into a dance.
+
+
+────────────────────────────────────────
+ 06 · LAMBERT NEBULA: ESSENTIAL
+────────────────────────────────────────
+[설명 · KR]
+람베르트 W 함수의 주가지 W₀ — 하나의 해(解)만으로 지어진 성운.
+95,000개의 입자가 회전하며 빛을 확산시키고, 지수적 안개(FogExp2)가
+깊이를 삼킨다. 가장 단순한 형태의 빛, 가장 본질적인 회전. 시리즈
+세 편(06·07·08) 중 첫 번째, '본질'의 장이다.
+
+[설명 · EN]
+A nebula built from W₀ alone — the principal branch of the Lambert W
+function, a single solution. 95,000 particles rotate and diffuse
+their light while exponential fog swallows the depth. Light at its
+simplest, rotation at its most essential — the first chapter of the
+Lambert trilogy (06·07·08).
+
+[시적 문구 · KR]  빛은 회전하면서 확산된다.
+[시적 문구 · EN]  Space bends. Light spreads by turning.
+
+
+────────────────────────────────────────
+ 07 · LAMBERT NEBULA: ARCHIVE
+────────────────────────────────────────
+[설명 · KR]
+W₀에 두 번째 가지 W₋₁이 더해진다. 12만 개의 입자가 두 해의 나선을
+겹쳐 쌓고, 중심의 코어는 심장처럼 맥동한다. 화면을 클릭하면 코어가
+크게 부풀었다 가라앉는다. 가산혼합으로 겹겹이 쌓인 빛은 밝아지다
+끝내 심연이 된다 — 기록된 빛의 저장고, '아카이브'의 장이다.
+
+[설명 · EN]
+To W₀ a second branch is added: W₋₁. 120,000 particles stack the two
+solutions into layered spirals around a core that pulses like a
+heart. Click, and the core swells before settling again. Light piled
+in additive layers grows brighter until it becomes an abyss — the
+archive chapter of the trilogy.
+
+[시적 문구 · KR]  가산되는 빛은 심연이 된다.
+[시적 문구 · EN]  Time slows. Light, added to light, becomes an abyss.
+
+
+────────────────────────────────────────
+ 08 · LAMBERT NEBULA
+────────────────────────────────────────
+[설명 · KR]
+람베르트 3부작의 완결. W₀ ∪ W₋₁의 성운이 이번에는 소리에 반응한다.
+마이크를 켜면 저음은 성운의 몸을 흔들고 고음은 빛의 입자를 떨게
+한다. 관람자의 목소리, 발걸음, 공간의 웅성거림이 그대로 조각의
+도구가 된다. 사운드는 공간을 조각한다 — 당신의 소리가 이 성운의
+형태다.
+
+[설명 · EN]
+The completion of the Lambert trilogy. The W₀ ∪ W₋₁ nebula now
+listens: with the microphone on, bass shakes the nebula's body and
+treble makes its particles shiver. Your voice, your footsteps, the
+murmur of the room become sculpting tools. Sound carves space —
+the shape of this nebula is the sound you make.
+
+[시적 문구 · KR]  사운드는 공간을 조각한다.
+[시적 문구 · EN]  Matter disappears. Sound is the hand that carves this space.
+
+
+────────────────────────────────────────
+ 09 · BESSEL BLOOM
+────────────────────────────────────────
+[설명 · KR]
+드럼의 표면이 울리는 방식 — 베셀 함수 J₀ — 로 짜인 빛의 수면.
+화면을 터치하면 그 자리에서 파원(波源)이 태어나고, 파동들은 서로
+교차하며 간섭무늬의 꽃을 피운다. 파원은 시간이 지나면 잦아들고,
+수면은 다시 고요로 돌아간다. 충돌이 곧 개화(開花)인 세계.
+
+[설명 · EN]
+A surface of light woven from the Bessel function J₀ — the way a
+drumhead rings. Touch the screen and a wave source is born; waves
+cross and interfere, blooming into flowers of light. Sources fade,
+and the surface returns to stillness. A world where collision itself
+is blossoming.
+
+[시적 문구 · KR]  파동은 충돌하며 꽃처럼 피어난다.
+[시적 문구 · EN]  Only equations remain. Waves collide, and the collision blooms.
+
+
+────────────────────────────────────────
+ 10 · LORENZ BUTTERFLY
+────────────────────────────────────────
+[설명 · KR]
+로렌즈 방정식(σ=10, ρ=28, β=8/3)을 따라 수천 개의 입자가 나비의
+두 날개를 그린다. 클릭하면 매개변수 ρ가 요동치고, 계(系)는 잠시
+다른 카오스로 튀었다가 천천히 본래의 끌개로 돌아온다. 예측할 수 없
+지만 벗어날 수도 없는 궤도 — 카오스는 질서의 또 다른 이름이다.
+
+[설명 · EN]
+Thousands of particles trace the two wings of a butterfly along the
+Lorenz equations (σ=10, ρ=28, β=8/3). Click, and the parameter ρ is
+perturbed — the system leaps into another chaos, then slowly falls
+back to its attractor. Unpredictable yet inescapable: chaos is
+another name for order.
+
+[시적 문구 · KR]  카오스는 질서의 또 다른 이름이다.
+[시적 문구 · EN]  Silence creates. Chaos is order wearing another name.
+
+
+────────────────────────────────────────
+ 11 · ODYSSEY: ESSENTIAL
+────────────────────────────────────────
+[설명 · KR]
+32만 개의 별이 차등 회전 ω(r)=35/r 을 따라 블랙홀 둘레를
+돈다. 광자 고리가 지평선 가장자리에서 빛나고, 카메라는 스스로
+궤도를 항해한다. 포인터를 움직이면 시선이 함께 표류한다 — 별들은
+관측자의 시점을 따라 이동한다. 오디세이 2부작의 '본질' 편.
+
+[설명 · EN]
+320,000 stars orbit a black hole in differential rotation, ω(r)=35/r.
+A photon ring glows at the edge of the horizon while the camera
+sails its own autonomous orbit. Move the pointer and your gaze
+drifts with it — the stars move with the observer's eye. The
+Essential chapter of the Odyssey diptych.
+
+[시적 문구 · KR]  별들은 관측자의 시점을 따라 이동한다.
+[시적 문구 · EN]  Life organizes itself. The stars move where the observer looks.
+
+
+────────────────────────────────────────
+ 12 · ODYSSEY: ARCHIVE
+────────────────────────────────────────
+[설명 · KR]
+슈바르츠실트 반지름 Rs=2GM/c² 위에 세워진 기억의 우주. 42만 개의
+입자가 커 블랙홀의 좌표계 끌림(Δθ ∝ e^(-r/450))을 따라 뒤틀리며
+돌고, 광자 고리 너머 아인슈타인 링이 푸르게 떠 있다. 관측된 모든
+빛이 기록으로 남아, 기억된 우주는 끝없이 확장된다.
+
+[설명 · EN]
+A universe of memory founded on the Schwarzschild radius Rs=2GM/c².
+420,000 particles twist in the frame-dragging of a Kerr black hole
+(Δθ ∝ e^(-r/450)) while an Einstein ring floats blue beyond the
+photon ring. Every observed light remains as a record — the
+remembered universe expands without end.
+
+[시적 문구 · KR]  기억된 우주가 끝없이 확장된다.
+[시적 문구 · EN]  Consciousness observes. A remembered universe never stops expanding.
+
+
+────────────────────────────────────────
+ 13 · EVENT HORIZON
+────────────────────────────────────────
+[설명 · KR]
+강착원반의 15만 입자가 ω ∝ r^(-3/2)로 회전하는 블랙홀에, 카메라가
+스스로 접근했다 물러나기를 반복한다. 화면의 계기판은 현재 거리
+R/Rs, 시간 지연 dτ/dt, 그리고 항해 단계(APPROACH · HORIZON SKIM ·
+DEPARTURE)를 실시간으로 알려준다. 지평선을 스칠 때 당신의 시간은
+바깥 우주보다 느리게 흐른다. 빛조차 돌아오지 못하는 경계 — 그
+가장자리를 스치는 항해.
+
+[설명 · EN]
+150,000 particles of an accretion disk spin at ω ∝ r^(-3/2) as the
+camera approaches and retreats on its own. A cockpit readout reports
+your distance R/Rs, your time dilation dτ/dt, and the phase of the
+voyage — APPROACH, HORIZON SKIM, DEPARTURE. Skimming the horizon,
+your time runs slower than the universe outside. A voyage grazing
+the boundary from which not even light returns.
+
+[시적 문구 · KR]  빛조차 돌아오지 못하는 경계.
+[시적 문구 · EN]  The voyage begins. At this boundary, even light forgets the way home.
+
+
+────────────────────────────────────────
+ 14 · BLACK HOLE VOYAGE
+────────────────────────────────────────
+[설명 · KR]
+180초의 자동 항해. 광막한 성운의 표류에서 시작해 아인슈타인 링의
+기하학적 왜곡, 사건의 지평선 진입, 슬릿-스캔으로 조각나는 시간
+(108–138초), 그리고 대붕괴(145–180초)까지 — 열 개의 악장으로 이루
+어진 중력의 교향곡이다. 백색소음과 드론이 하강에 맞춰 고조되는
+절차적 사운드가 함께 붕괴한다. 붕괴는 가장 거대한 음악이다.
+
+[설명 · EN]
+An automated voyage of 180 seconds. From drifting through the vast
+nebula, past the geometric warping of the Einstein ring, across the
+event-horizon threshold, into slit-scan temporal fragmentation
+(108–138s) and the final collapse (145–180s) — a gravitational
+symphony in ten movements. Procedural white noise and drones swell
+with the descent and collapse along with it. Collapse is the
+greatest music of all.
+
+[시적 문구 · KR]  붕괴는 가장 거대한 음악이다.
+[시적 문구 · EN]  Everything returns. Collapse is the loudest music the universe knows.
+
+
+────────────────────────────────────────
+ 15 · KERR PLASMA CATHEDRAL
+────────────────────────────────────────
+[설명 · KR]
+회전하는 블랙홀의 시공간 — 커 계량(Kerr metric) — 을 통째로 렌더링
+한 플라스마의 대성당. 화면을 끌면 시공간이 함께 회전하고, 마이크를
+켜면 당신의 소리가 플라스마를 물들인다. 관측을 멈추면 우주는 천천히
+잠들고, 다시 손을 대면 깨어난다. FIN을 누르는 순간 대성당은 마지막
+승천을 시작한다 — 모든 입자는 결국 침묵 속으로 사라진다. 15편의
+항해가 여기서 끝나고, 하나의 질문이 남는다.
+
+[설명 · EN]
+A cathedral of plasma rendered from the spacetime of a rotating
+black hole — the Kerr metric itself. Drag, and spacetime spins with
+your hand; open the microphone, and your sound stains the plasma.
+Cease observing and the universe slowly falls asleep; touch it and
+it wakes. Press FIN and the cathedral begins its final ascension —
+every particle vanishes, at last, into silence. The voyage of
+fifteen works ends here, leaving a single question.
+
+[시적 문구 · KR]  모든 입자는 결국 침묵 속으로 사라진다.
+[시적 문구 · EN]  The equation continues. Every particle returns to silence — the equation does not.
+
+════════════════════════════════════════════════════════════════════
+ (문서 생성: 2026-07-18 · 시적 문구 KR은 각 작품 공식 메타 문구,
+  EN 첫 구는 작품 간 인터스티셜 연결 문장과 동일)
+════════════════════════════════════════════════════════════════════
