@@ -488,9 +488,10 @@ footer.foot{ border-top:1px solid var(--line); padding:48px 0 90px; }
             <div class="data">
                 <div class="d-row head"><div class="k"><span class="kt">동작</span></div><div class="val">기준 · 타이밍</div></div>
                 <div class="d-row"><div class="k"><span class="kv">▸</span><span class="kt">Attract 시작</span></div><div class="val">관측소에서 <code>45s</code> 무입력 → 작품 프리뷰를 <b>자동 순회</b>(작품당 <code>9s</code>). 하단에 <code>Autoplay</code> 안내 점멸<small>ATTRACT_MS · CYCLE_MS</small></div></div>
+                <div class="d-row"><div class="k"><span class="kv">▸</span><span class="kt">자동 진입</span></div><div class="val">오프닝 화면에서 <code>45s</code> 무입력 → <b>EMBARK를 대신 눌러</b> 관측소로 진입한 뒤 순회 시작. 관람객이 한 명도 없어도 작품이 계속 노출된다<small>EMBARK_MS</small></div></div>
                 <div class="d-row"><div class="k"><span class="kv">▸</span><span class="kt">관람권 이양</span></div><div class="val">순회 중 <b>화면 터치·마우스·키 입력</b> 즉시 자동재생 중단 → 관람객이 직접 조작</div></div>
                 <div class="d-row"><div class="k"><span class="kv">▸</span><span class="kt">오프닝 리셋</span></div><div class="val">관측소에서 <code>210s</code> 무입력 → 세션 초기화 후 블랙홀 오프닝으로 복귀<small>RESET_MS</small></div></div>
-                <div class="d-row"><div class="k"><span class="kv">▸</span><span class="kt">작품 자동 복귀</span></div><div class="val">작품 페이지에서 <code>90s</code> 무입력 → 관측소로 복귀(한 작품에 멈춰있지 않게)<small>IDLE (work pages)</small></div></div>
+                <div class="d-row"><div class="k"><span class="kv">▸</span><span class="kt">작품 자동 복귀</span></div><div class="val">작품 페이지에서 <code>240s</code> 무입력 → 관측소로 복귀(한 작품에 멈춰있지 않게). 가만히 감상하는 관람객을 끊지 않도록 14번의 붕괴 주기(180s)보다 길게 잡았다<small>IDLE (work pages)</small></div></div>
             </div>
             <div class="note"><span class="lbl">타이밍 조정</span>
                 값은 <code>index.html</code> 하단 <b>KIOSK / ATTRACT MODE</b> 블록의 <code>ATTRACT_MS · CYCLE_MS · RESET_MS</code>, 각 작품 <code>KIOSK IDLE-RETURN</code> 블록의 <code>IDLE</code> 상수로 조정한다. 

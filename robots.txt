@@ -1,4 +1,9 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://profkenyu.github.io/19th/sitemap.xml
+# 프로젝터 상영 전용 — 전시장 운영용이므로 검색 노출 대상이 아니다.
+# (각 파일에 noindex 메타도 함께 넣어 두었다. 크롤러는 도메인 루트의
+#  robots.txt만 읽으므로, 이 파일의 규칙은 보조 수단이다.)
+Disallow: /19th/projector/
+
+Sitemap: https://kimgunwoo.kr/19th/sitemap.xml

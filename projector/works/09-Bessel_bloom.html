@@ -16,6 +16,7 @@
 <meta property="og:description" content="파동은 충돌하며 꽃처럼 피어난다.">
 <meta property="og:url" content="https://kimgunwoo.kr/19th/09-Bessel_bloom.html">
 <link rel="canonical" href="https://kimgunwoo.kr/19th/09-Bessel_bloom.html">
+<meta name="robots" content="noindex,nofollow">
 <meta property="og:image" content="https://kimgunwoo.kr/19th/og/09.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -458,11 +459,11 @@ window.addEventListener("resize", ()=>{
 })();
 </script>
 <script>
-/* ===== KIOSK IDLE-RETURN — 무인 전시: 90s 무입력 시 관측소 복귀 ===== */
+/* ===== KIOSK IDLE-RETURN — 무인 전시: 240s 무입력 시 관측소 복귀 ===== */
 (function(){
   if(location.search.indexOf('embed')>-1) return;
   if(sessionStorage.getItem('odyssey_kiosk')!=='1') return;
-  var IDLE=90000, t=null;
+  var IDLE=240000, t=null;
   function go(){ location.href='index.html'; }
   function bump(){ clearTimeout(t); t=setTimeout(go, IDLE); }
   ['pointerdown','pointermove','keydown','wheel','touchstart'].forEach(function(ev){

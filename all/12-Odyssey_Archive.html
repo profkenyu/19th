@@ -309,11 +309,11 @@ renderer.setSize(innerWidth,innerHeight);
 })();
 </script>
 <script>
-/* ===== KIOSK IDLE-RETURN — 무인 전시: 90s 무입력 시 관측소 복귀 ===== */
+/* ===== KIOSK IDLE-RETURN — 무인 전시: 240s 무입력 시 관측소 복귀 ===== */
 (function(){
   if(location.search.indexOf('embed')>-1) return;
   if(sessionStorage.getItem('odyssey_kiosk')!=='1') return;
-  var IDLE=90000, t=null;
+  var IDLE=240000, t=null;
   function go(){ location.href='index.html'; }
   function bump(){ clearTimeout(t); t=setTimeout(go, IDLE); }
   ['pointerdown','pointermove','keydown','wheel','touchstart'].forEach(function(ev){
