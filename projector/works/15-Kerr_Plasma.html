@@ -131,8 +131,8 @@ var LOWP=false; /* projector: always high quality */
         <line x1="2" y1="2" x2="22" y2="22"></line>
       </svg>
     </button>
-    <a href="index.html" onclick="if(history.length>1){history.back();return false}" class="btn" id="back-btn">BACK</a>
-    <a href="index.html#coda" class="btn" id="fin-btn">FIN</a>
+    <a href="../index.html" onclick="if(history.length>1){history.back();return false}" class="btn" id="back-btn">BACK</a>
+    <a href="../index.html" class="btn" id="fin-btn">FIN</a>
 </div>
 <canvas id="c"></canvas>
 <div id="sleep-note">관측이 멈추면, 우주는 잠든다<br>WHEN OBSERVATION CEASES, THE UNIVERSE SLEEPS</div>
@@ -380,7 +380,7 @@ function render(t){
             if(filterNode)filterNode.frequency.value=140+uFin*uFin*5200;
             if(mainGainNode)mainGainNode.gain.value=0.45*(1-smoothJS(0.86,1,uFin));
         }
-        if(uFin>=1&&!finDone){finDone=true;var dep=document.getElementById("depart");if(dep)dep.style.opacity="1";setTimeout(function(){location.href="index.html#coda";},900);}
+        if(uFin>=1&&!finDone){finDone=true;var dep=document.getElementById("depart");if(dep)dep.style.opacity="1";setTimeout(function(){location.href="../index.html";},900);}
     }
 
     if(isAudioPlaying && analyser) {
@@ -451,7 +451,7 @@ render(0);
 })();
 </script>
 <nav id="voyage-line" aria-label="Voyage" onpointerdown="event.stopPropagation()" ontouchstart="event.stopPropagation()">
-<a href="index.html" class="home" title="Home" aria-label="Home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.5 4 5.5 4 9s-1.5 6.5-4 9c-2.5-2.5-4-5.5-4-9s1.5-6.5 4-9z"/></svg></a>
+<a href="../index.html" class="home" title="Home" aria-label="Home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.5 4 5.5 4 9s-1.5 6.5-4 9c-2.5-2.5-4-5.5-4-9s1.5-6.5 4-9z"/></svg></a>
 <div class="vl-div"></div>
 
 <a href="01-RGB_Galaxy.html" class="vt" title="01 · RGB Galaxy Engine"></a>
@@ -500,7 +500,7 @@ render(0);
   if(location.search.indexOf('embed')>-1) return;
   if(sessionStorage.getItem('odyssey_kiosk')!=='1') return;
   var IDLE=240000, t=null;
-  function go(){ location.href='index.html'; }
+  function go(){ location.href='../index.html'; }
   function bump(){ clearTimeout(t); t=setTimeout(go, IDLE); }
   ['pointerdown','pointermove','keydown','wheel','touchstart'].forEach(function(ev){
     addEventListener(ev, bump, {passive:true});
@@ -508,6 +508,5 @@ render(0);
   bump();
 })();
 </script>
-<script src="interstitial.js" defer></script>
 </body>
 </html>

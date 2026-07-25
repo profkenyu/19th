@@ -171,7 +171,7 @@ section h2 .no { color:#c0152a; margin-right:8px; }
 <div class="row"><dt>렌더링</dt><dd>Three.js 0.160.0 (01~14번, jsDelivr CDN 로드) / 15번은 라이브러리 없는 순수 WebGL 1.0</dd></div>
 <div class="row"><dt>형식</dt><dd>각 작품은 외부 의존성이 거의 없는 단일 HTML 파일 (셰이더·기하·로직 모두 인라인)</dd></div>
 <div class="row"><dt>최적화</dt><dd>LOWP(저전력) 자동 감지 — 모바일 UA, 화면폭 768px 이하, CPU 코어 4개 이하, 메모리 4GB 이하 중 하나라도 해당하면 파티클 수 감소, 안티앨리어싱 해제, pixelRatio 1로 고정</dd></div>
-<div class="row"><dt>공통 장치</dt><dd>백그라운드 탭에서 rAF 큐잉(전력 절약), 화면 회전/뷰포트 변화 재동기화(vp-resync), CDN 로드 실패 감지 워치독(7초 후 재시도 안내), 세션 기반 UNIVERSE # 시드, 방문 기록(sessionStorage), 키오스크 무인 모드(90초 무입력 시 관측소 복귀), bfcache/pageshow 대응</dd></div>
+<div class="row"><dt>공통 장치</dt><dd>백그라운드 탭에서 rAF 큐잉(전력 절약), 화면 회전/뷰포트 변화 재동기화(vp-resync), CDN 로드 실패 감지 워치독(7초 후 재시도 안내), 세션 기반 UNIVERSE # 시드, 방문 기록(sessionStorage), 키오스크 무인 모드(오프닝 45초 무입력 시 자동 진입 후 프리뷰 순회, 작품에서 240초 무입력 시 관측소 복귀), bfcache/pageshow 대응</dd></div>
 <div class="row"><dt>사운드</dt><dd>Web Audio API — 08번(마이크 FFT 분석), 14번(절차적 합성: 화이트노이즈+드론+스월), 15번(합성+마이크 분석)</dd></div>
 </dl>
 </section>

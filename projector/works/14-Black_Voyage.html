@@ -152,7 +152,7 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
         <line x1="17" y1="9" x2="23" y2="15"></line>
       </svg>
     </button>
-    <a href="index.html" onclick="if(history.length>1){history.back();return false}" class="control-btn" id="back-btn">BACK</a>
+    <a href="../index.html" onclick="if(history.length>1){history.back();return false}" class="control-btn" id="back-btn">BACK</a>
     <a href="15-Kerr_Plasma.html" class="control-btn" id="next-btn">NEXT</a>
   </div>
 </div>
@@ -1147,7 +1147,7 @@ animate();
 })();
 </script>
 <nav id="voyage-line" aria-label="Voyage" onpointerdown="event.stopPropagation()" ontouchstart="event.stopPropagation()">
-<a href="index.html" class="home" title="Home" aria-label="Home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.5 4 5.5 4 9s-1.5 6.5-4 9c-2.5-2.5-4-5.5-4-9s1.5-6.5 4-9z"/></svg></a>
+<a href="../index.html" class="home" title="Home" aria-label="Home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.5 4 5.5 4 9s-1.5 6.5-4 9c-2.5-2.5-4-5.5-4-9s1.5-6.5 4-9z"/></svg></a>
 <div class="vl-div"></div>
 
 <a href="01-RGB_Galaxy.html" class="vt" title="01 · RGB Galaxy Engine"></a>
@@ -1213,7 +1213,7 @@ animate();
   if(location.search.indexOf('embed')>-1) return;
   if(sessionStorage.getItem('odyssey_kiosk')!=='1') return;
   var IDLE=240000, t=null;
-  function go(){ location.href='index.html'; }
+  function go(){ location.href='../index.html'; }
   function bump(){ clearTimeout(t); t=setTimeout(go, IDLE); }
   ['pointerdown','pointermove','keydown','wheel','touchstart'].forEach(function(ev){
     addEventListener(ev, bump, {passive:true});
@@ -1221,6 +1221,5 @@ animate();
   bump();
 })();
 </script>
-<script src="interstitial.js" defer></script>
 </body>
 </html>
