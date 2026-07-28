@@ -189,8 +189,8 @@ body.entered #title-ui{ opacity:1; }
 #mode-toggle{
     display:inline-flex;
     align-items:center;
-    gap:2px;
-    padding:3px;
+    gap:1.6px;
+    padding:2.4px;
     border-radius:999px;
     background:#000;
     box-shadow:0 2px 14px rgba(0,0,0,.42);
@@ -198,12 +198,12 @@ body.entered #title-ui{ opacity:1; }
     pointer-events:auto;
 }
 #mode-toggle .m-btn{
-    font-size:8.5px;
+    font-size:6.8px;
     letter-spacing:.18em;
     text-transform:uppercase;
     font-weight:600;
-    padding:5px 13px 5px 14px;
-    border:1.5px solid transparent;
+    padding:4px 10.4px 4px 11.2px;
+    border:1.2px solid transparent;
     border-radius:999px;
     background:transparent;
     cursor:pointer;
@@ -236,9 +236,9 @@ body.entered #title-ui{ opacity:1; }
 }
 #guide-link{
     position:fixed;
-    /* 우상단 — 좌측 토글 캡슐(top 18 + 높이 27.5, 중심 31.75)과 세로 중심 정렬
-       = 31.75 - 글자높이 9/2 = 27.25 */
-    top:27.25px;
+    /* 우상단 — 좌측 토글 캡슐(top 18 + 높이 22, 중심 29)과 세로 중심 정렬
+       = 29 - 글자높이 9/2 = 24.5 */
+    top:24.5px;
     right:18px;
     z-index:99999;
     font-size:9px;
@@ -413,11 +413,11 @@ body.departing #stage{ opacity:0; transition:opacity 1s ease; }
         left:16px; right:16px;
     }
     #title-ui{ display:none; }
-    #mode-toggle .m-btn{ padding:4px 10px; font-size:7.5px; letter-spacing:.12em; }
-    #mode-toggle{ padding:2.5px; }
+    #mode-toggle .m-btn{ padding:3.2px 8px; font-size:6px; letter-spacing:.12em; }
+    #mode-toggle{ padding:2px; }
     #guide-link{
-        /* 모바일 캡슐: top 16 + 높이 23.5 → 중심 27.75, 글자높이 8/2 = 23.75 */
-        top:calc(max(16px, env(safe-area-inset-top)) + 7.75px);
+        /* 모바일 캡슐: top 16 + 높이 18.8 → 중심 25.4, 글자높이 8/2 = 21.4 */
+        top:calc(max(16px, env(safe-area-inset-top)) + 5.4px);
         right:16px; font-size:8px; letter-spacing:.12em;
     }
     #hint{ bottom:20px; left:16px; font-size:9px; }
