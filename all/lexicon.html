@@ -76,16 +76,16 @@ body::after{
 }
 /* 블랙 캡슐 + 활성 항목은 흰 바탕·검은 글씨 필 */
 #mode-toggle{
-    display:inline-flex; align-items:center; gap:2px;
-    padding:3px; border-radius:999px;
+    display:inline-flex; align-items:center; gap:1.6px;
+    padding:2.4px; border-radius:999px;
     background:#000;
     flex-shrink:0; pointer-events:auto;
     box-shadow:0 2px 12px rgba(0,0,0,.28);
 }
 #mode-toggle .m-btn{
-    font-size:8.5px; letter-spacing:.18em; text-transform:uppercase; font-weight:600;
+    font-size:6.8px; letter-spacing:.18em; text-transform:uppercase; font-weight:600;
     font-family:'Inter','Noto Sans KR',sans-serif;
-    padding:5px 13px 5px 14px; border:1.5px solid transparent; border-radius:999px;
+    padding:4px 10.4px 4px 11.2px; border:1.2px solid transparent; border-radius:999px;
     background:transparent; cursor:pointer;
     color:rgba(255,255,255,.72);
     transition:color .28s ease-in-out, background-color .28s ease-in-out, border-color .28s ease-in-out;
@@ -97,8 +97,8 @@ body::after{
 #mode-toggle .m-btn:focus-visible{ outline:1px solid rgba(0,0,0,.7); outline-offset:3px; }
 @media (max-width:768px){
     #fixed-top-left{ top:max(14px,env(safe-area-inset-top)); left:14px; }
-    #mode-toggle .m-btn{ padding:4px 10px; font-size:7.5px; letter-spacing:.12em; }
-    #mode-toggle{ padding:2.5px; }
+    #mode-toggle .m-btn{ padding:3.2px 8px; font-size:6px; letter-spacing:.12em; }
+    #mode-toggle{ padding:2px; }
 }
 .shell{ max-width:1240px; margin:0 auto; padding:0 clamp(20px,4vw,56px); }
 header.mast{ padding:clamp(42px,7vh,76px) 0 clamp(40px,6vh,72px); border-bottom:1px solid var(--line); }
