@@ -98,60 +98,55 @@ header h1 .thin { font-weight:300; letter-spacing:-.02em; }
   align-items: center;
   gap: 14px;
 }
+/* 블랙 캡슐 + 활성 항목은 흰 바탕·검은 글씨 필 */
 #mode-toggle {
   display: inline-flex;
   align-items: center;
-  border: 1px solid rgba(255,255,255,.16);
-  border-radius: 3px;
-  background: rgba(2,3,5,0.92);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  overflow: hidden;
+  gap: 2px;
+  padding: 3px;
+  border-radius: 999px;
+  background: #000;
+  box-shadow: 0 2px 12px rgba(0,0,0,.28);
   flex-shrink: 0;
   pointer-events: auto;
 }
 #mode-toggle .m-btn {
-  font-size: 8px;
-  letter-spacing: .16em;
+  font-size: 8.5px;
+  letter-spacing: .18em;
   text-transform: uppercase;
-  font-weight: 500;
+  font-weight: 600;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  padding: 5px 11px;
-  border: none;
+  padding: 5px 13px 5px 14px;
+  border: 1.5px solid transparent;
+  border-radius: 999px;
   background: transparent;
   cursor: pointer;
-  color: rgba(255,255,255,.35);
-  transition: all .28s ease-in-out;
+  color: rgba(255,255,255,.72);
+  transition: color .28s ease-in-out, background-color .28s ease-in-out, border-color .28s ease-in-out;
   white-space: nowrap;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
   line-height: 1;
 }
 #mode-toggle .m-btn.active {
-  background: rgba(255,255,255,.94);
-  color: #020305;
-  border-radius: 2px;
+  background: #fff;
+  border-color: #fff;
+  color: #000;
+  cursor: default;
 }
 #mode-toggle .m-btn:not(.active):hover {
-  color: rgba(255,255,255,.7);
+  color: #fff;
 }
-#mode-toggle .m-dot {
-  width: 3px; height: 3px;
-  border-radius: 50%;
-  background: currentColor;
-  flex-shrink: 0;
-  opacity: .7;
+#mode-toggle .m-btn:focus-visible {
+  outline: 1px solid rgba(0,0,0,.7);
+  outline-offset: 3px;
 }
-#mode-toggle .m-btn.active .m-dot {
-  background: #c0152a;
-  opacity: 1;
-}
-#mode-toggle .m-divider {
-  width: 1px; height: 13px;
-  background: rgba(255,255,255,.12);
-  flex-shrink: 0;
+/* 시각 크기는 유지하고 터치 히트 영역만 44px로 확장 */
+#mode-toggle .m-btn { position: relative; }
+#mode-toggle .m-btn::after {
+  content: ''; position: absolute; left: 0; right: 0;
+  top: 50%; height: 44px; transform: translateY(-50%);
 }
 #title-ui {
   font-size: 10px;
@@ -170,8 +165,8 @@ header h1 .thin { font-weight:300; letter-spacing:-.02em; }
     top: max(16px, env(safe-area-inset-top));
     left: 16px; right: 16px;
   }
-  #mode-toggle .m-btn { padding: 4px 8px; font-size: 7px; letter-spacing: .1em; }
-  #mode-toggle { backdrop-filter: none; -webkit-backdrop-filter: none; }
+  #mode-toggle .m-btn { padding: 4px 10px; font-size: 7.5px; letter-spacing: .12em; }
+  #mode-toggle { padding: 2.5px; }
   #title-ui { display: none; }
 }
 .h-left .sub {
@@ -361,9 +356,8 @@ footer.foot {
 <canvas id="bg"></canvas>
 <div id="fixed-top-left">
 <div id="mode-toggle">
-<a class="m-btn" href="../index.html" id="btn-cinematic"><span class="m-dot"></span>Cinematic</a>
-<div class="m-divider"></div>
-<span class="m-btn active" id="btn-archive"><span class="m-dot"></span>Archive</span>
+<a class="m-btn" href="../index.html" id="btn-cinematic">Cinematic</a>
+<span class="m-btn active" id="btn-archive" aria-current="page">Archive</span>
 </div>
 <div id="title-ui">김건우교수 제19회 개인전 · 2026.08.24–09.05 · 갤러리한빛</div>
 </div>
