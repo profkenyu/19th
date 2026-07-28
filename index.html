@@ -177,7 +177,8 @@ body.entered #title-ui{ opacity:1; }
     position:fixed;
     top:18px;
     left:18px;
-    right:60px;
+    /* 우상단 관람가이드 링크(약 96px + 여백) 자리를 비워둔다 */
+    right:130px;
     z-index:99999;
     pointer-events:none;
     display:flex;
@@ -235,10 +236,10 @@ body.entered #title-ui{ opacity:1; }
 }
 #guide-link{
     position:fixed;
-    /* 토글 캡슐(top 18 + 높이 27.5) 아래로 9px 간격, 좌측은 캡슐 안쪽 라벨(CINEMATIC) 시작선에 맞춤
-       = 캡슐 left 18 + 캡슐 padding 3 + 버튼 border 1.5 + 버튼 padding-left 14 */
-    top:56px;
-    left:36.5px;
+    /* 우상단 — 좌측 토글 캡슐(top 18 + 높이 27.5, 중심 31.75)과 세로 중심 정렬
+       = 31.75 - 글자높이 9/2 = 27.25 */
+    top:27.25px;
+    right:18px;
     z-index:99999;
     font-size:9px;
     letter-spacing:.16em;
@@ -257,36 +258,6 @@ body.entered #title-ui{ opacity:1; }
     text-decoration:underline;
     text-underline-offset:3px;
 }
-
-/* ===== 프로젝터 상영 링크 (우상단) ===== */
-#projector-link{
-    position:fixed;
-    top:18px;
-    right:18px;
-    z-index:99999;
-    width:34px;
-    height:34px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:rgba(110,220,235,.6);
-    text-decoration:none;
-    border:1px solid rgba(110,220,235,.2);
-    border-radius:6px;
-    background:rgba(6,10,16,.35);
-    backdrop-filter:blur(6px);
-    -webkit-backdrop-filter:blur(6px);
-    transition:color .28s ease, border-color .28s ease, background .28s ease;
-}
-#projector-link svg{ width:19px; height:19px; display:block; }
-#projector-link:hover, #projector-link:focus-visible{
-    color:rgba(110,220,235,1);
-    border-color:rgba(110,220,235,.5);
-    background:rgba(10,18,28,.6);
-}
-#projector-link:focus-visible{ outline:1px solid rgba(110,220,235,.6); outline-offset:3px; }
-/* 키오스크(무인 전시)에서는 숨긴다 — 관람객이 상영 플레이어로 빠져나가지 않도록 */
-body.kiosk #projector-link{ display:none; }
 #opening{
     position:fixed; inset:0;
     background:#000; z-index:88888;
@@ -445,16 +416,10 @@ body.departing #stage{ opacity:0; transition:opacity 1s ease; }
     #mode-toggle .m-btn{ padding:4px 10px; font-size:7.5px; letter-spacing:.12em; }
     #mode-toggle{ padding:2.5px; }
     #guide-link{
-        /* 모바일 캡슐: top 16 + 높이 23.5 → 아래 9px, 좌측은 16 + 2.5 + 1.5 + 10 = 30 */
-        top:calc(max(16px, env(safe-area-inset-top)) + 33px);
-        left:30px; font-size:8px; letter-spacing:.12em;
+        /* 모바일 캡슐: top 16 + 높이 23.5 → 중심 27.75, 글자높이 8/2 = 23.75 */
+        top:calc(max(16px, env(safe-area-inset-top)) + 7.75px);
+        right:16px; font-size:8px; letter-spacing:.12em;
     }
-    #projector-link{
-        top:max(16px, env(safe-area-inset-top)); right:16px;
-        width:30px; height:30px;
-        backdrop-filter:none; -webkit-backdrop-filter:none;
-    }
-    #projector-link svg{ width:17px; height:17px; }
     #hint{ bottom:20px; left:16px; font-size:9px; }
     #universe-id{ bottom:20px; right:16px; font-size:8px; }
     #enterBtn{ width:80px; height:69px; font-size:7.5px; padding-top:18px; }
@@ -556,13 +521,6 @@ body.arriving #preview{ opacity:0; animation:obsRise 1.5s cubic-bezier(.16,1,.3,
     <div id="title-ui">김건우교수 제19회 개인전 · 2026.08.24–09.05 · 갤러리한빛</div>
 </div>
 <a id="guide-link" href="guide.html">관람가이드 · GUIDE</a>
-<a id="projector-link" href="projector/index.html" title="프로젝터 상영 · 15작품 순환 재생" aria-label="프로젝터 상영 — 15작품 순환 재생">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-        <rect x="1.6" y="7.5" width="14" height="10" rx="2.2"/>
-        <circle cx="8.6" cy="12.5" r="2.6"/>
-        <path d="M18.2 9.7 22.4 7.2v10.6l-4.2-2.5"/>
-    </svg>
-</a>
 
 <script>
 const works = [
