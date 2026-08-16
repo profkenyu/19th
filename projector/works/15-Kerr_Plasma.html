@@ -97,7 +97,6 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 <script>
 
 var LOWP=false; /* projector: always high quality */
-(function(){var raf=window.requestAnimationFrame.bind(window),q=[];window.requestAnimationFrame=function(cb){return document.hidden?(q.push(cb),0):raf(cb)};document.addEventListener('visibilitychange',function(){if(!document.hidden){var p=q;q=[];for(var i=0;i<p.length;i++)raf(p[i]);}});})();
 </script>
 <div id="title">
     <span>KERR PLASMA CATHEDRAL</span>
@@ -138,6 +137,14 @@ var LOWP=false; /* projector: always high quality */
 <div id="sleep-note">관측이 멈추면, 우주는 잠든다<br>WHEN OBSERVATION CEASES, THE UNIVERSE SLEEPS</div>
 <script>
 const canvas=document.getElementById("c"),gl=canvas.getContext("webgl");
+function showRenderFailure(reason){
+  const note=document.getElementById("sleep-note");
+  if(note){ note.textContent="RENDERING HALTED · "+reason; note.style.opacity="1"; }
+  console.error("Kerr renderer:",reason);
+}
+if(!gl){ showRenderFailure("WebGL unavailable"); throw new Error("WebGL unavailable"); }
+canvas.addEventListener("webglcontextlost",e=>{e.preventDefault();showRenderFailure("context lost")});
+canvas.addEventListener("webglcontextrestored",()=>location.reload());
 function resize(){var d=Math.min(window.devicePixelRatio||1,LOWP?1:1.5);canvas.width=window.innerWidth*d;canvas.height=window.innerHeight*d;gl.viewport(0,0,canvas.width,canvas.height)}
 window.addEventListener("resize",resize);resize();
 
@@ -207,9 +214,30 @@ finalColor=finalColor/(1.0+finalColor);
 finalColor*=1.0-smoothstep(0.82,1.0,u_fin);                          /* evaporation blackout */
 gl_FragColor=vec4(pow(finalColor,vec3(0.88)),1.0);}`;
 
-function compile(type,src){const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);return s;}
+function compile(type,src){
+  const shader=gl.createShader(type);
+  gl.shaderSource(shader,src);
+  gl.compileShader(shader);
+  if(!gl.getShaderParameter(shader,gl.COMPILE_STATUS)){
+    const reason=gl.getShaderInfoLog(shader)||"shader compilation failed";
+    gl.deleteShader(shader);
+    showRenderFailure(reason);
+    return null;
+  }
+  return shader;
+}
 const fragSrc=LOWP?fragment.replace('MAX_STEPS 90','MAX_STEPS 56').replace('VOLUME_STEPS 28','VOLUME_STEPS 16'):fragment;
-const program=gl.createProgram();gl.attachShader(program,compile(gl.VERTEX_SHADER,vertex));gl.attachShader(program,compile(gl.FRAGMENT_SHADER,fragSrc));gl.linkProgram(program);gl.useProgram(program);
+const vertexShader=compile(gl.VERTEX_SHADER,vertex),fragmentShader=compile(gl.FRAGMENT_SHADER,fragSrc);
+if(!vertexShader||!fragmentShader) throw new Error("Shader compilation failed");
+const program=gl.createProgram();
+gl.attachShader(program,vertexShader);gl.attachShader(program,fragmentShader);gl.linkProgram(program);
+if(!gl.getProgramParameter(program,gl.LINK_STATUS)){
+  const reason=gl.getProgramInfoLog(program)||"program link failed";
+  showRenderFailure(reason);
+  gl.deleteProgram(program);
+  throw new Error(reason);
+}
+gl.deleteShader(vertexShader);gl.deleteShader(fragmentShader);gl.useProgram(program);
 
 const buffer=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buffer);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]),gl.STATIC_DRAW);
 const position=gl.getAttribLocation(program,"position");gl.enableVertexAttribArray(position);gl.vertexAttribPointer(position,2,gl.FLOAT,false,0,0);

@@ -527,7 +527,7 @@ const works = [
   { title:"RGB Galaxy Engine",         poetic:"우주는 하나의 빛에서 시작된다.",           formula:"r = √i × 1.6 · θ = i × 0.013 + arm × 2π/3",  file:"01-RGB_Galaxy.html" },
   { title:"Hyperbolic Nebula",         poetic:"성운은 계산되는 안개이다.",                 formula:"z = sinh(u)·cosh(v) − tanh(r)",               file:"02-Hyperbolic_Nebula.html" },
   { title:"Riemann Dreams",            poetic:"증명되지 않은 우주가 흔들린다.",            formula:"θ = i × 0.045 + sin(p) × 2",                   file:"03-Riemann_dream.html" },
-  { title:"Quantum Singularity",       poetic:"특이점은 중심이 아니라 붕괴이다.",          formula:"θ = p · 2π/137.507 · r = √p × 12",             file:"04-Quantum_sing.html" },
+  { title:"Quantum Singularity",       poetic:"특이점은 중심이 아니라 붕괴이다.",          formula:"θ = p · 2π/φ² · r = √p × 12",             file:"04-Quantum_sing.html" },
   { title:"Dual Galaxy",               poetic:"두 개의 중력장이 서로를 뒤틀기 시작한다.", formula:"r = √i × 1.2 · θ = i × 0.015 · Dual-Color Arms",          file:"05-Dual_Galaxy.html" },
   { title:"Lambert Nebula: Essential", poetic:"빛은 회전하면서 확산된다.",                 formula:"W₀(x) · FogExp2(density = 0.0025)",            file:"06-Lambert_Essential.html" },
   { title:"Lambert Nebula: Archive",   poetic:"가산되는 빛은 심연이 된다.",                formula:"W₀ ∪ W₋₁ · Additive Blending",                 file:"07-Lambert_Archive.html" },
@@ -816,7 +816,7 @@ if(arrivedAtCoda){
 
 <script>
 (function() {
-    const canvas = document.getElementById('space');
+    let canvas = document.getElementById('space');
     const isAndroid = /Android/i.test(navigator.userAgent);
     const isMobileViewport = window.matchMedia('(max-width: 768px)').matches;
     const isLandscapeShort = window.matchMedia('(max-height: 600px) and (orientation: landscape)').matches;
@@ -835,8 +835,17 @@ if(arrivedAtCoda){
           || canvas.getContext('experimental-webgl', glOptions);
     let bgRafId = null;
 
-    if (!gl) {
+    function startCanvasFallback() {
+        if (gl) {
+            const fallbackCanvas = document.createElement('canvas');
+            fallbackCanvas.id = 'space';
+            fallbackCanvas.setAttribute('aria-hidden', 'true');
+            canvas.replaceWith(fallbackCanvas);
+            canvas = fallbackCanvas;
+            gl = null;
+        }
         const ctx = canvas.getContext('2d');
+        if (!ctx) return;
         let W = canvas.width = window.innerWidth, H = canvas.height = window.innerHeight;
         const stars = Array.from({length:lowPowerMode ? 90 : 300}, () => ({
             x:Math.random()*W, y:Math.random()*H, r:Math.random()*1.8,
@@ -859,8 +868,9 @@ if(arrivedAtCoda){
         }
         fallback();
         window.addEventListener('resize', () => { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; });
-        return;
     }
+
+    if (!gl) { startCanvasFallback(); return; }
 
     const VS = `
 attribute vec2 a_pos;
@@ -1018,10 +1028,13 @@ void main(){
 
     const vs = compileShader(gl.VERTEX_SHADER, VS);
     const fs = compileShader(gl.FRAGMENT_SHADER, FS);
+    if (!vs || !fs) { startCanvasFallback(); return; }
     const prog = gl.createProgram();
     gl.attachShader(prog, vs); gl.attachShader(prog, fs);
     gl.linkProgram(prog);
     if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+        gl.deleteProgram(prog);
+        startCanvasFallback();
         return;
     }
     gl.useProgram(prog);
@@ -1141,7 +1154,7 @@ void main(){
   if(!seed){ seed = Math.floor(Math.random()*16777216).toString(16).padStart(6,'0').toUpperCase();
              sessionStorage.setItem('universe_seed', seed); }
 
-  const cv = document.getElementById('void');
+  let cv = document.getElementById('void');
   const glOpt = { antialias:false, alpha:false, depth:false, stencil:false,
                   preserveDrawingBuffer:false, powerPreference: lowTier?'low-power':'high-performance' };
   let gl = cv.getContext('webgl', glOpt) || cv.getContext('experimental-webgl', glOpt);
@@ -1293,8 +1306,9 @@ void main(){
 
   function runGL(){
     const vs=compile(gl.VERTEX_SHADER,VS), fs=compile(gl.FRAGMENT_SHADER,FS);
+    if(!vs || !fs){ fallback2D(); return; }
     const prog=gl.createProgram(); gl.attachShader(prog,vs); gl.attachShader(prog,fs); gl.linkProgram(prog);
-    if(!gl.getProgramParameter(prog,gl.LINK_STATUS)){ fallback2D(); return; }
+    if(!gl.getProgramParameter(prog,gl.LINK_STATUS)){ gl.deleteProgram(prog); fallback2D(); return; }
     gl.useProgram(prog);
 
     const buf=gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,buf);
@@ -1360,8 +1374,18 @@ void main(){
 
   let usingFallback=false;
   function fallback2D(){
+    if(usingFallback) return;
     usingFallback=true;
+    if(gl){
+      const fallbackCanvas=document.createElement('canvas');
+      fallbackCanvas.id='void';
+      fallbackCanvas.setAttribute('aria-hidden', 'true');
+      cv.replaceWith(fallbackCanvas);
+      cv=fallbackCanvas;
+      gl=null;
+    }
     const ctx=cv.getContext('2d');
+    if(!ctx) return;
     function rs(){ W=cv.width=window.innerWidth; H=cv.height=window.innerHeight; }
     rs(); window.addEventListener('resize',rs);
     const stars=Array.from({length:lowTier?80:200},()=>({x:Math.random(),y:Math.random(),r:Math.random()*1.5,a:Math.random()}));

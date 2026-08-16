@@ -166,11 +166,10 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 <script>
 
 var LOWP=/Android|iPhone|iPad|Mobile/i.test(navigator.userAgent)||matchMedia('(max-width:768px)').matches||(navigator.hardwareConcurrency||8)<=4||(navigator.deviceMemory||8)<=4||location.search.indexOf('embed')>-1;
-(function(){var raf=window.requestAnimationFrame.bind(window),q=[];window.requestAnimationFrame=function(cb){return document.hidden?(q.push(cb),0):raf(cb)};document.addEventListener('visibilitychange',function(){if(!document.hidden){var p=q;q=[];for(var i=0;i<p.length;i++)raf(p[i]);}});})();
 </script>
 <div id="ui">
 <h1>QUANTUM SINGULARITY</h1>
-θ = p·2π/137.507 · r = √p×12 &nbsp;·&nbsp; Move Pointer · Gaze Drift<br>
+θ = p·2π/φ² · r = √p×12 &nbsp;·&nbsp; Move Pointer · Gaze Drift<br>
 Evolution Phase: <span id="evo-phase" class="prime-pulse">INITIALIZING</span><br>
 Current Prime Factor: <span id="prime-factor" class="prime-pulse">2</span>
 </div>
@@ -213,7 +212,7 @@ const latticePoints = [];
 const latticeColors = [];
 const latticeIndices = [];
 primes.forEach((p, idx) => {
-    const theta = (p * Math.PI * 2) / 137.507;
+    const theta = p * Math.PI * 2 / ((1 + Math.sqrt(5)) / 2) ** 2;
     const r = Math.sqrt(p) * 12.0;
     const baseHeight = (p % 77) * 15;
     for(let h = 0; h < 5; h++) {
