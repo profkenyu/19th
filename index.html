@@ -301,18 +301,18 @@ body.departing #stage{ opacity:0; transition:opacity 1s ease; }
     font-family:'Futura-Bold', Futura, 'Trebuchet MS', Arial, sans-serif;
     font-weight:700; font-size:clamp(40px,7vw,100px); line-height:1.06; letter-spacing:-.08em;
     color:var(--ink); text-shadow:0 0 44px rgba(120,150,190,.14);
-    opacity:0; animation:fadeUp 2s ease 2.5s forwards;
+    opacity:0; animation:fadeUp 1.7s cubic-bezier(.16,1,.3,1) 1.8s forwards;
 }
 .op-subtitle{
     margin-top:16px; font-family:'Inter','Noto Sans KR',sans-serif;
     color:rgba(255,255,255,.35); letter-spacing:.2em; font-size:13px;
-    opacity:0; animation:fadeUp 2s ease 2.9s forwards;
+    opacity:0; animation:fadeUp 1.5s cubic-bezier(.16,1,.3,1) 2.15s forwards;
 }
 
 #depart{
     margin-top:44px; pointer-events:auto; background:none; border:none; cursor:pointer;
     display:inline-flex; flex-direction:column; align-items:center; justify-content:center; gap:11px; padding:10px;
-    opacity:0; animation:fadeUp 1.8s ease 3.3s forwards; -webkit-tap-highlight-color:transparent;
+    opacity:0; animation:fadeUp 1.35s cubic-bezier(.16,1,.3,1) 2.6s forwards; -webkit-tap-highlight-color:transparent;
 }
 #depart .depart-label{
     font-family:'DM Mono',monospace;
@@ -407,7 +407,9 @@ body.departing #stage{ opacity:0; transition:opacity 1s ease; }
     pointer-events:none; font-style:italic;
     font-family:'DM Mono',monospace;
 }
-@media(max-width:768px){
+/* 태블릿에서는 상단 안전영역을 우선한다. 769–1024px 장치도
+   브라우저 크롬/노치에 의해 캡슐이 침범되지 않도록 제목을 비운다. */
+@media(max-width:1024px){
     #fixed-top-left{
         top:max(16px, env(safe-area-inset-top));
         left:16px; right:16px;
