@@ -264,9 +264,7 @@ body.entered #title-ui{ opacity:1; }
     text-underline-offset:3px;
 }
 #opening{
-    position:fixed;
-    top:var(--vv-top); left:var(--vv-left);
-    width:var(--vv-width); height:var(--vv-height);
+    position:fixed; inset:0;
     overflow:hidden;
     background:#000; z-index:88888;
     isolation:isolate;
@@ -278,7 +276,12 @@ body.entered #title-ui{ opacity:1; }
     visibility:hidden;
 }
 
-canvas#void{ position:absolute; inset:0; width:100%; height:100%; z-index:0; display:block; }
+canvas#void{
+    position:absolute;
+    top:var(--vv-top); left:var(--vv-left);
+    width:var(--vv-width); height:var(--vv-height);
+    z-index:0; display:block;
+}
 
 #op-grain{
     position:absolute; inset:-50%; z-index:1; pointer-events:none;
@@ -298,7 +301,10 @@ canvas#void{ position:absolute; inset:0; width:100%; height:100%; z-index:0; dis
 body.departing .bar{ height:clamp(70px,15vh,170px); transition:height 2.1s cubic-bezier(.16,1,.3,1); }
 
 #stage{
-    position:absolute; inset:0; z-index:20;
+    position:absolute;
+    top:var(--vv-top); left:var(--vv-left);
+    width:var(--vv-width); height:var(--vv-height);
+    z-index:20;
     display:flex; flex-direction:column; align-items:center; justify-content:flex-end;
     padding:0 24px calc(env(safe-area-inset-bottom) + 13vh);
     text-align:center; pointer-events:none;
@@ -477,9 +483,9 @@ body.arriving #preview{ opacity:0; animation:obsRise 1.5s cubic-bezier(.16,1,.3,
 <body>
 
 <script>
-/* iPadOS의 서드파티 브라우저는 첫 진입 중 visual viewport의 위치와 높이를
-   서로 다른 시점에 갱신할 수 있다. scale=1인 고정 레이어에는 offsetTop을
-   다시 더하지 않고, 현재 보고된 좌표계 중 가장 작은 크기만 사용한다.
+/* iPadOS Chrome은 외부 링크로 실행될 때 고정 레이어와 visual viewport의
+   원점을 서로 다른 시점에 확정할 수 있다. API 오프셋을 추정해서 더하지
+   않고 #opening의 실제 사각형을 측정해 화면 밖으로 나간 만큼만 보정한다.
    두 번 연속 같은 값이 확인된 뒤 오프닝 타이포그래피를 시작한다. */
 (function(){
   var root=document.documentElement;
@@ -507,21 +513,31 @@ body.arriving #preview{ opacity:0; animation:obsRise 1.5s cubic-bezier(.16,1,.3,
     var innerW=positive(window.innerWidth);
     var innerH=positive(window.innerHeight);
     var scale=vv && positive(vv.scale) ? vv.scale : 1;
+    var opening=document.getElementById('opening');
+    var openingRect=opening ? opening.getBoundingClientRect() : null;
+    var frameW=openingRect ? positive(openingRect.width) : null;
+    var frameH=openingRect ? positive(openingRect.height) : null;
 
-    /* 주소창 정착 과정의 offset은 fixed 좌표에 재적용하지 않는다.
-       실제 확대가 일어난 경우에만 visual viewport 이동량을 사용한다. */
-    var trackVisualOffset=!!vv && scale>1.01;
-    var left=trackVisualOffset ? clamp(vv.offsetLeft || 0,0,Math.max(0,layoutW-1)) : 0;
-    var top=trackVisualOffset ? clamp(vv.offsetTop || 0,0,Math.max(0,layoutH-1)) : 0;
-    var width=smallest([layoutW,innerW,vv ? positive(vv.width) : null,layoutW-left]);
-    var height=smallest([layoutH,innerH,vv ? positive(vv.height) : null,layoutH-top]);
+    /* 외부 앱 → Chrome 전환 중 fixed 레이어가 가시 화면 위·왼쪽에 놓이면
+       실제 사각형의 음수 좌표만큼 내부 프레임을 되돌린다. 확대 중에는
+       visual viewport의 이동량도 함께 반영한다. */
+    var rectLeft=openingRect ? Math.max(0,-openingRect.left) : 0;
+    var rectTop=openingRect ? Math.max(0,-openingRect.top) : 0;
+    var zoomLeft=vv && scale>1.01 ? Math.max(0,vv.offsetLeft || 0) : 0;
+    var zoomTop=vv && scale>1.01 ? Math.max(0,vv.offsetTop || 0) : 0;
+    var left=clamp(Math.max(rectLeft,zoomLeft),0,Math.max(0,(frameW || layoutW)-1));
+    var top=clamp(Math.max(rectTop,zoomTop),0,Math.max(0,(frameH || layoutH)-1));
+    var availableW=Math.max(1,(frameW || layoutW)-left);
+    var availableH=Math.max(1,(frameH || layoutH)-top);
+    var width=smallest([layoutW,innerW,vv ? positive(vv.width) : null,availableW]);
+    var height=smallest([layoutH,innerH,vv ? positive(vv.height) : null,availableH]);
 
     return {
       width:Math.round(width*100)/100,
       height:Math.round(height*100)/100,
       left:Math.round(left*100)/100,
       top:Math.round(top*100)/100,
-      right:Math.round(Math.max(0,layoutW-left-width)*100)/100,
+      right:Math.round(Math.max(0,(frameW || layoutW)-left-width)*100)/100,
       scale:scale
     };
   }
@@ -1436,11 +1452,11 @@ void main(){
     const uSeed=gl.getUniformLocation(prog,'u_seed');
     gl.uniform1f(uSeed, parseInt(seed,16)%1000);
 
-    const openingEl=document.getElementById('opening');
+    const openingFrame=document.getElementById('stage');
     let openingResizeQueued=false;
     function resize(){
       if(dead || !cv.isConnected) return;
-      const box=openingEl.getBoundingClientRect();
+      const box=openingFrame.getBoundingClientRect();
       W=Math.max(1,Math.round(box.width));
       H=Math.max(1,Math.round(box.height));
       const pixelW=Math.max(1,Math.floor(W*DPR));
@@ -1462,7 +1478,7 @@ void main(){
     window.addEventListener('odysseyviewportchange',requestOpeningResize);
     if(window.visualViewport){ window.visualViewport.addEventListener('resize',requestOpeningResize); }
     const openingObserver=('ResizeObserver' in window) ? new ResizeObserver(requestOpeningResize) : null;
-    openingObserver?.observe(openingEl);
+    openingObserver?.observe(openingFrame);
     requestAnimationFrame(()=>requestAnimationFrame(requestOpeningResize));
     [240,720].forEach(delay=>setTimeout(requestOpeningResize,delay));
 
@@ -1516,15 +1532,15 @@ void main(){
     }
     const ctx=cv.getContext('2d');
     if(!ctx) return;
-    const openingEl=document.getElementById('opening');
+    const openingFrame=document.getElementById('stage');
     function rs(){
-      const box=openingEl.getBoundingClientRect();
+      const box=openingFrame.getBoundingClientRect();
       W=Math.max(1,Math.round(box.width)); H=Math.max(1,Math.round(box.height));
       cv.width=W; cv.height=H;
     }
     rs(); window.addEventListener('resize',rs);
     window.addEventListener('odysseyviewportchange',rs);
-    if('ResizeObserver' in window) new ResizeObserver(rs).observe(openingEl);
+    if('ResizeObserver' in window) new ResizeObserver(rs).observe(openingFrame);
     const stars=Array.from({length:lowTier?80:200},()=>({x:Math.random(),y:Math.random(),r:Math.random()*1.5,a:Math.random()}));
     (function loop(now){ raf=requestAnimationFrame(loop); const t=(now-t0)*0.001;
       ctx.fillStyle='#020305'; ctx.fillRect(0,0,W,H);
