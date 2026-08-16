@@ -3,7 +3,7 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
 <title>THE ARCHIVE · 2026: a digital odyssey</title>
 <link rel="apple-touch-icon" sizes="180x180" href="../favicon_io/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon_io/favicon-32x32.png">
@@ -64,8 +64,8 @@ header h1 .thin { display:block; font-weight:400; letter-spacing:-.09em; }
   text-transform: uppercase;
   font-weight: 600;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  padding: 4px 10.4px 4px 11.2px;
-  border: 1.2px solid transparent;
+  padding: 4px 10px 4px 10.8px;
+  border: 1px solid transparent;
   border-radius: 999px;
   background: transparent;
   cursor: pointer;
@@ -75,7 +75,7 @@ header h1 .thin { display:block; font-weight:400; letter-spacing:-.09em; }
   text-decoration: none;
   display: inline-flex;
   align-items: center;
-  line-height: 1;
+  line-height: 1.2;
 }
 #mode-toggle .m-btn.active {
   background: #fff;
@@ -111,10 +111,10 @@ header h1 .thin { display:block; font-weight:400; letter-spacing:-.09em; }
 @media (max-width: 1024px) {
   #fixed-top-left {
     top: max(16px, env(safe-area-inset-top));
-    left: 16px; right: 16px;
+    left: max(16px, env(safe-area-inset-left));
+    right: auto;
+    max-width: calc(100vw - max(16px, env(safe-area-inset-left)) - max(16px, env(safe-area-inset-right)));
   }
-  #mode-toggle .m-btn { padding: 3.2px 8px; font-size: 6px; letter-spacing: .12em; }
-  #mode-toggle { padding: 2px; }
   #title-ui { display: none; }
 }
 .h-left .sub { max-width:620px; margin:0; font:10px/1.4 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; letter-spacing:.04em; text-transform:uppercase; color:var(--muted); }
