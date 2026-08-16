@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>김건우교수 제19회 개인전 · Cinematic</title>
 <link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
@@ -202,8 +202,8 @@ body.entered #title-ui{ opacity:1; }
     letter-spacing:.18em;
     text-transform:uppercase;
     font-weight:600;
-    padding:4px 10.4px 4px 11.2px;
-    border:1.2px solid transparent;
+    padding:4px 10px 4px 10.8px;
+    border:1px solid transparent;
     border-radius:999px;
     background:transparent;
     cursor:pointer;
@@ -213,7 +213,7 @@ body.entered #title-ui{ opacity:1; }
     text-decoration:none;
     display:inline-flex;
     align-items:center;
-    line-height:1;
+    line-height:1.2;
 }
 #mode-toggle .m-btn.active{
     background:#fff;
@@ -412,15 +412,15 @@ body.departing #stage{ opacity:0; transition:opacity 1s ease; }
 @media(max-width:1024px){
     #fixed-top-left{
         top:max(16px, env(safe-area-inset-top));
-        left:16px; right:16px;
+        left:max(16px, env(safe-area-inset-left));
+        right:auto;
+        max-width:calc(100vw - max(16px, env(safe-area-inset-left)) - max(16px, env(safe-area-inset-right)));
     }
     #title-ui{ display:none; }
-    #mode-toggle .m-btn{ padding:3.2px 8px; font-size:6px; letter-spacing:.12em; }
-    #mode-toggle{ padding:2px; }
     #guide-link{
-        /* 모바일 캡슐: top 16 + 높이 18.8 → 중심 25.4, 글자높이 8/2 = 21.4 */
-        top:calc(max(16px, env(safe-area-inset-top)) + 5.4px);
-        right:16px; font-size:8px; letter-spacing:.12em;
+        /* 동일 크기 캡슐의 중심선에 맞추고 iOS 좌우 안전영역을 확보한다. */
+        top:calc(max(16px, env(safe-area-inset-top)) + 6.5px);
+        right:max(16px, env(safe-area-inset-right)); font-size:8px; letter-spacing:.12em;
     }
     #hint{ bottom:20px; left:16px; font-size:9px; }
     #universe-id{ bottom:20px; right:16px; font-size:8px; }
