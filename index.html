@@ -21,7 +21,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://kimgunwoo.kr/19th/og/index.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Inter:wght@300;400;500;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&amp;family=Inter:wght@300;400;500;700&amp;family=Noto+Sans+KR:wght@300;400;500;700&amp;display=swap" rel="stylesheet">
 <style>
 :root{
     --bg:#020305;
@@ -32,17 +32,11 @@
     --ink:#f3f5f8;
     --crimson:#c0152a;
     --crimson-lit:#e8324a;
-    --vv-top:0px;
-    --vv-left:0px;
-    --vv-right:0px;
-    --vv-width:100vw;
-    --vv-height:100svh;
 }
 *{ margin:0; padding:0; box-sizing:border-box; }
 html,body{
     width:100%; height:100%;
-    height:100svh;
-    height:var(--vv-height);
+    min-height:100%;
     overflow:hidden;
     overscroll-behavior:none;
     background:black;
@@ -61,7 +55,10 @@ canvas#space{
 #obs{
     position:fixed; inset:0; z-index:2;
     display:flex; flex-direction:column;
-    padding:92px clamp(20px,5vw,64px) 84px;
+    padding-top:max(92px, calc(env(safe-area-inset-top) + 54px));
+    padding-right:max(clamp(20px,5vw,64px), calc(env(safe-area-inset-right) + 18px));
+    padding-bottom:max(84px, calc(env(safe-area-inset-bottom) + 48px));
+    padding-left:max(clamp(20px,5vw,64px), calc(env(safe-area-inset-left) + 18px));
 }
 #obs-head{ margin-bottom:clamp(14px,3vh,34px); }
 #obs-head h1{
@@ -133,10 +130,20 @@ canvas#space{
     #preview{ display:none; }
 }
 @media(max-width:900px){
-    #obs{ padding:84px 20px 76px; }
+    #obs{
+        padding-top:max(84px, calc(env(safe-area-inset-top) + 44px));
+        padding-right:max(20px, calc(env(safe-area-inset-right) + 16px));
+        padding-bottom:max(76px, calc(env(safe-area-inset-bottom) + 42px));
+        padding-left:max(20px, calc(env(safe-area-inset-left) + 16px));
+    }
 }
 @media (orientation:landscape) and (max-height:520px){
-    #obs{ padding:56px 18px 52px; }
+    #obs{
+        padding-top:max(56px, calc(env(safe-area-inset-top) + 20px));
+        padding-right:max(18px, calc(env(safe-area-inset-right) + 14px));
+        padding-bottom:max(52px, calc(env(safe-area-inset-bottom) + 24px));
+        padding-left:max(18px, calc(env(safe-area-inset-left) + 14px));
+    }
     #obs-head{ margin-bottom:8px; }
     #obs-head .sub{ font-size:8px; letter-spacing:.16em; margin-top:3px; }
     .row{ padding:3px 6px 3px 2px; }
@@ -172,7 +179,9 @@ canvas#space{
 }
 body.entered #title-ui{ opacity:1; }
 #hint{
-    position:fixed; bottom:24px; left:24px;
+    position:fixed;
+    bottom:max(24px, calc(env(safe-area-inset-bottom) + 12px));
+    left:max(24px, calc(env(safe-area-inset-left) + 12px));
     z-index:500; pointer-events:none;
     font-size:10px; color:rgba(255,255,255,.48);
     letter-spacing:.04em;
@@ -180,10 +189,10 @@ body.entered #title-ui{ opacity:1; }
 }
 #fixed-top-left{
     position:fixed;
-    top:calc(18px + var(--vv-top));
-    left:calc(18px + var(--vv-left));
+    top:18px;
+    left:18px;
     /* 우상단 관람가이드 링크(약 96px + 여백) 자리를 비워둔다 */
-    right:calc(130px + var(--vv-right));
+    right:130px;
     z-index:99999;
     pointer-events:none;
     display:flex;
@@ -243,8 +252,8 @@ body.entered #title-ui{ opacity:1; }
     position:fixed;
     /* 우상단 — 좌측 토글 캡슐(top 18 + 높이 22, 중심 29)과 세로 중심 정렬
        = 29 - 글자높이 9/2 = 24.5 */
-    top:calc(24.5px + var(--vv-top));
-    right:calc(18px + var(--vv-right));
+    top:24.5px;
+    right:18px;
     z-index:99999;
     font-size:9px;
     letter-spacing:.16em;
@@ -277,9 +286,8 @@ body.entered #title-ui{ opacity:1; }
 }
 
 canvas#void{
-    position:absolute;
-    top:var(--vv-top); left:var(--vv-left);
-    width:var(--vv-width); height:var(--vv-height);
+    position:absolute; inset:0;
+    width:100%; height:100%;
     z-index:0; display:block;
 }
 
@@ -301,12 +309,12 @@ canvas#void{
 body.departing .bar{ height:clamp(70px,15vh,170px); transition:height 2.1s cubic-bezier(.16,1,.3,1); }
 
 #stage{
-    position:absolute;
-    top:var(--vv-top); left:var(--vv-left);
-    width:var(--vv-width); height:var(--vv-height);
+    position:absolute; inset:0;
+    width:100%; height:100%;
     z-index:20;
     display:flex; flex-direction:column; align-items:center; justify-content:flex-end;
-    padding:0 24px calc(env(safe-area-inset-bottom) + 13vh);
+    padding:0 24px calc(env(safe-area-inset-bottom) + clamp(48px,13vh,112px));
+    padding-bottom:calc(env(safe-area-inset-bottom) + clamp(48px,13svh,112px));
     text-align:center; pointer-events:none;
 }
 body.departing #stage{ opacity:0; transition:opacity 1s ease; }
@@ -419,7 +427,9 @@ html.viewport-ready #depart{ animation:fadeUp 1.35s cubic-bezier(.16,1,.3,1) 2.4
 #coda-close:hover{ color:#fff; }
 #coda-close:hover::after{ opacity:1; }
 #universe-id{
-    position:fixed; bottom:24px; right:24px; z-index:500;
+    position:fixed;
+    bottom:max(24px, calc(env(safe-area-inset-bottom) + 12px));
+    right:max(24px, calc(env(safe-area-inset-right) + 12px)); z-index:500;
     color:rgba(110,220,235,.75); font-size:9px; letter-spacing:.22em;
     pointer-events:none; font-style:italic;
     font-family:'DM Mono',monospace;
@@ -428,19 +438,25 @@ html.viewport-ready #depart{ animation:fadeUp 1.35s cubic-bezier(.16,1,.3,1) 2.4
    브라우저 크롬/노치에 의해 캡슐이 침범되지 않도록 제목을 비운다. */
 @media(max-width:1024px){
     #fixed-top-left{
-        top:calc(max(16px, env(safe-area-inset-top)) + var(--vv-top));
-        left:calc(max(16px, env(safe-area-inset-left)) + var(--vv-left));
+        top:max(16px, env(safe-area-inset-top));
+        left:max(16px, env(safe-area-inset-left));
         right:auto;
-        max-width:calc(var(--vv-width) - max(16px, env(safe-area-inset-left)) - max(16px, env(safe-area-inset-right)));
+        max-width:calc(100vw - max(16px, env(safe-area-inset-left)) - max(16px, env(safe-area-inset-right)));
     }
     #title-ui{ display:none; }
     #guide-link{
         /* 동일 크기 캡슐의 중심선에 맞추고 iOS 좌우 안전영역을 확보한다. */
-        top:calc(max(16px, env(safe-area-inset-top)) + var(--vv-top) + 6.5px);
-        right:calc(max(16px, env(safe-area-inset-right)) + var(--vv-right)); font-size:8px; letter-spacing:.12em;
+        top:calc(max(16px, env(safe-area-inset-top)) + 6.5px);
+        right:max(16px, env(safe-area-inset-right)); font-size:8px; letter-spacing:.12em;
     }
-    #hint{ bottom:20px; left:16px; font-size:9px; }
-    #universe-id{ bottom:20px; right:16px; font-size:8px; }
+    #hint{
+        bottom:max(20px, calc(env(safe-area-inset-bottom) + 10px));
+        left:max(16px, calc(env(safe-area-inset-left) + 10px)); font-size:9px;
+    }
+    #universe-id{
+        bottom:max(20px, calc(env(safe-area-inset-bottom) + 10px));
+        right:max(16px, calc(env(safe-area-inset-right) + 10px)); font-size:8px;
+    }
     #enterBtn{ width:80px; height:69px; font-size:7.5px; padding-top:18px; }
     .coda-info{ font-size:9px; letter-spacing:.18em; }
     .coda-q em{ margin-top:10px; }
@@ -451,7 +467,9 @@ html.viewport-ready #depart{ animation:fadeUp 1.35s cubic-bezier(.16,1,.3,1) 2.4
 
 /* ===== KIOSK / ATTRACT (무인 전시 자동재생) ===== */
 #attract-hint{
-    position:fixed; left:50%; bottom:60px; transform:translateX(-50%);
+    position:fixed; left:50%;
+    bottom:max(60px, calc(env(safe-area-inset-bottom) + 30px));
+    transform:translateX(-50%);
     z-index:600; pointer-events:none; opacity:0;
     font-size:10px; letter-spacing:.26em; text-transform:uppercase;
     color:rgba(110,220,235,.85); white-space:nowrap;
@@ -466,7 +484,12 @@ body.attracting #attract-hint{ opacity:1; }
 }
 @keyframes attractPulse{ 0%,100%{ opacity:.35; transform:scale(1); } 50%{ opacity:1; transform:scale(1.55); } }
 @media (prefers-reduced-motion:reduce){ #attract-hint::before{ animation:none; } }
-@media(max-width:640px){ #attract-hint{ font-size:8.5px; letter-spacing:.16em; bottom:54px; } }
+@media(max-width:640px){
+    #attract-hint{
+        font-size:8.5px; letter-spacing:.16em;
+        bottom:max(54px, calc(env(safe-area-inset-bottom) + 26px));
+    }
+}
 
 @keyframes obsRise{ from{ opacity:0; transform:translateY(18px); filter:blur(2px); }
                     to{ opacity:1; transform:translateY(0); filter:blur(0); } }
@@ -483,62 +506,49 @@ body.arriving #preview{ opacity:0; animation:obsRise 1.5s cubic-bezier(.16,1,.3,
 <body>
 
 <script>
-/* iPadOS Chrome은 외부 링크로 실행될 때 고정 레이어와 visual viewport의
-   원점을 서로 다른 시점에 확정할 수 있다. API 오프셋을 추정해서 더하지
-   않고 #opening의 실제 사각형을 측정해 화면 밖으로 나간 만큼만 보정한다.
-   두 번 연속 같은 값이 확인된 뒤 오프닝 타이포그래피를 시작한다. */
+/* 외부 앱 -> iOS Chrome 콜드 스타트에서는 주소창과 visual viewport가
+   pageshow 뒤에도 여러 번 바뀐다. fixed 레이어의 크기나 html/body 높이를
+   그 일시값으로 덮어쓰지 않는다. 브라우저가 inset:0 레이어를 배치하게 두고,
+   실제 사각형이 안정된 뒤에만 오프닝 타이포그래피를 시작한다. */
 (function(){
   var root=document.documentElement;
   var queued=false, settleTimer=0;
   var startedAt=performance.now(), settleUntil=startedAt+3200;
   var stableReads=0, lastSample=null, lastApplied=null;
 
-  function positive(value){
-    return Number.isFinite(value) && value>0 ? value : null;
+  function rounded(value){
+    return Math.round((Number.isFinite(value) ? value : 0)*100)/100;
   }
-  function smallest(values){
-    var valid=values.filter(function(value){ return value!==null; });
-    return valid.length ? Math.max(1,Math.min.apply(Math,valid)) : 1;
-  }
-  function clamp(value,min,max){ return Math.min(max,Math.max(min,value)); }
   function near(a,b){
     return !!a && !!b &&
-      Math.abs(a.width-b.width)<0.75 && Math.abs(a.height-b.height)<0.75 &&
-      Math.abs(a.left-b.left)<0.75 && Math.abs(a.top-b.top)<0.75;
+      Math.abs(a.visualWidth-b.visualWidth)<0.75 &&
+      Math.abs(a.visualHeight-b.visualHeight)<0.75 &&
+      Math.abs(a.layoutWidth-b.layoutWidth)<0.75 &&
+      Math.abs(a.layoutHeight-b.layoutHeight)<0.75 &&
+      Math.abs(a.offsetTop-b.offsetTop)<0.75 &&
+      Math.abs(a.offsetLeft-b.offsetLeft)<0.75 &&
+      Math.abs(a.openingWidth-b.openingWidth)<0.75 &&
+      Math.abs(a.openingHeight-b.openingHeight)<0.75 &&
+      Math.abs(a.openingTop-b.openingTop)<0.75 &&
+      Math.abs(a.openingLeft-b.openingLeft)<0.75;
   }
   function readViewport(){
     var vv=window.visualViewport;
-    var layoutW=positive(document.documentElement.clientWidth) || positive(window.innerWidth) || 1;
-    var layoutH=positive(document.documentElement.clientHeight) || positive(window.innerHeight) || 1;
-    var innerW=positive(window.innerWidth);
-    var innerH=positive(window.innerHeight);
-    var scale=vv && positive(vv.scale) ? vv.scale : 1;
     var opening=document.getElementById('opening');
-    var openingRect=opening ? opening.getBoundingClientRect() : null;
-    var frameW=openingRect ? positive(openingRect.width) : null;
-    var frameH=openingRect ? positive(openingRect.height) : null;
-
-    /* 외부 앱 → Chrome 전환 중 fixed 레이어가 가시 화면 위·왼쪽에 놓이면
-       실제 사각형의 음수 좌표만큼 내부 프레임을 되돌린다. 확대 중에는
-       visual viewport의 이동량도 함께 반영한다. */
-    var rectLeft=openingRect ? Math.max(0,-openingRect.left) : 0;
-    var rectTop=openingRect ? Math.max(0,-openingRect.top) : 0;
-    var zoomLeft=vv && scale>1.01 ? Math.max(0,vv.offsetLeft || 0) : 0;
-    var zoomTop=vv && scale>1.01 ? Math.max(0,vv.offsetTop || 0) : 0;
-    var left=clamp(Math.max(rectLeft,zoomLeft),0,Math.max(0,(frameW || layoutW)-1));
-    var top=clamp(Math.max(rectTop,zoomTop),0,Math.max(0,(frameH || layoutH)-1));
-    var availableW=Math.max(1,(frameW || layoutW)-left);
-    var availableH=Math.max(1,(frameH || layoutH)-top);
-    var width=smallest([layoutW,innerW,vv ? positive(vv.width) : null,availableW]);
-    var height=smallest([layoutH,innerH,vv ? positive(vv.height) : null,availableH]);
-
+    var rect=opening ? opening.getBoundingClientRect() : null;
     return {
-      width:Math.round(width*100)/100,
-      height:Math.round(height*100)/100,
-      left:Math.round(left*100)/100,
-      top:Math.round(top*100)/100,
-      right:Math.round(Math.max(0,(frameW || layoutW)-left-width)*100)/100,
-      scale:scale
+      layoutWidth:rounded(document.documentElement.clientWidth || window.innerWidth),
+      layoutHeight:rounded(document.documentElement.clientHeight || window.innerHeight),
+      visualWidth:rounded(vv ? vv.width : window.innerWidth),
+      visualHeight:rounded(vv ? vv.height : window.innerHeight),
+      offsetTop:rounded(vv ? vv.offsetTop : 0),
+      offsetLeft:rounded(vv ? vv.offsetLeft : 0),
+      scale:rounded(vv ? vv.scale : 1),
+      openingTop:rounded(rect ? rect.top : 0),
+      openingLeft:rounded(rect ? rect.left : 0),
+      openingWidth:rounded(rect ? rect.width : 0),
+      openingHeight:rounded(rect ? rect.height : 0),
+      openingReady:!!(rect && rect.width>0 && rect.height>0)
     };
   }
   function syncViewport(){
@@ -549,17 +559,12 @@ body.arriving #preview{ opacity:0; animation:obsRise 1.5s cubic-bezier(.16,1,.3,
 
     if(!near(sample,lastApplied)){
       lastApplied=sample;
-      root.style.setProperty('--vv-top',sample.top+'px');
-      root.style.setProperty('--vv-left',sample.left+'px');
-      root.style.setProperty('--vv-right',sample.right+'px');
-      root.style.setProperty('--vv-width',sample.width+'px');
-      root.style.setProperty('--vv-height',sample.height+'px');
       window.ODYSSEY_VIEWPORT_STATE=sample;
       window.dispatchEvent(new Event('odysseyviewportchange'));
     }
 
     var elapsed=performance.now()-startedAt;
-    if(!root.classList.contains('viewport-ready') &&
+    if(!root.classList.contains('viewport-ready') && sample.openingReady &&
        ((elapsed>=120 && stableReads>=2) || elapsed>=1200)){
       root.classList.add('viewport-ready');
     }
@@ -573,10 +578,11 @@ body.arriving #preview{ opacity:0; animation:obsRise 1.5s cubic-bezier(.16,1,.3,
   }
   function restartSettling(duration){
     settleUntil=Math.max(settleUntil,performance.now()+duration);
+    stableReads=0;
     queueViewportSync();
   }
   window.ODYSSEY_SYNC_VIEWPORT=function(){ restartSettling(1200); };
-  syncViewport();
+  queueViewportSync();
   addEventListener('resize',function(){ restartSettling(800); },{passive:true});
   addEventListener('orientationchange',function(){ setTimeout(function(){ restartSettling(1600); },120); },{passive:true});
   addEventListener('pageshow',function(){ restartSettling(1600); },{passive:true});
@@ -974,7 +980,14 @@ if(arrivedAtCoda){
         }
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
-        let W = canvas.width = window.innerWidth, H = canvas.height = window.innerHeight;
+        let W=1, H=1;
+        function resizeFallback(){
+            const frame=canvas.getBoundingClientRect();
+            W=Math.max(1,Math.round(frame.width));
+            H=Math.max(1,Math.round(frame.height));
+            canvas.width=W; canvas.height=H;
+        }
+        resizeFallback();
         const stars = Array.from({length:lowPowerMode ? 90 : 300}, () => ({
             x:Math.random()*W, y:Math.random()*H, r:Math.random()*1.8,
             a:Math.random(), vx:(Math.random()-.5)*.04, vy:(Math.random()-.5)*.04
@@ -995,7 +1008,8 @@ if(arrivedAtCoda){
             }
         }
         fallback();
-        window.addEventListener('resize', () => { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; });
+        window.addEventListener('resize', resizeFallback);
+        window.addEventListener('odysseyviewportchange', resizeFallback);
     }
 
     if (!gl) { startCanvasFallback(); return; }
@@ -1182,12 +1196,11 @@ void main(){
         const dpr = lowPowerMode
             ? Math.min(window.devicePixelRatio || 1, 0.72)
             : Math.min(window.devicePixelRatio || 1, 1.5);
-        const vw = window.innerWidth;
-        const vh = (window.visualViewport && window.visualViewport.height) ? Math.ceil(window.visualViewport.height) : window.innerHeight;
+        const frame = canvas.getBoundingClientRect();
+        const vw = Math.max(1, Math.round(frame.width));
+        const vh = Math.max(1, Math.round(frame.height));
         canvas.width  = Math.floor(vw * dpr);
         canvas.height = Math.floor(vh * dpr);
-        canvas.style.width  = vw + 'px';
-        canvas.style.height = vh + 'px';
         gl.viewport(0, 0, canvas.width, canvas.height);
     }
     resize();
@@ -1220,6 +1233,7 @@ void main(){
     }
     window.addEventListener('resize', requestResize);
     window.addEventListener('orientationchange', () => setTimeout(requestResize, 120));
+    window.addEventListener('odysseyviewportchange', requestResize);
     if(window.visualViewport){ window.visualViewport.addEventListener('resize', requestResize); }
 
     window.addEventListener('pageshow', (e) => {
