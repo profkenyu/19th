@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>김건우교수 제19회 개인전 · Cinematic</title>
+<title>김건우 교수 제19회 개인전 · Cinematic</title>
 <link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
 <link rel="shortcut icon" href="favicon_io/favicon.ico">
-<meta name="description" content="김건우교수 제19회 개인전 — 수학과 물리의 방정식으로 생성되는 인터랙티브 미디어아트. 2026.08.24–09.05 갤러리한빛.">
+<meta name="description" content="김건우 교수 제19회 개인전 — 수학과 물리의 방정식으로 생성되는 인터랙티브 미디어아트. 2026.08.24–09.05 갤러리한빛.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="2026: a digital odyssey">
-<meta property="og:description" content="김건우교수 제19회 개인전 — 수학과 물리의 방정식으로 생성되는 인터랙티브 미디어아트.">
+<meta property="og:description" content="김건우 교수 제19회 개인전 — 수학과 물리의 방정식으로 생성되는 인터랙티브 미디어아트.">
 <meta property="og:url" content="https://kimgunwoo.kr/19th/">
 <link rel="canonical" href="https://kimgunwoo.kr/19th/">
 <meta property="og:image" content="https://kimgunwoo.kr/19th/og/index.jpg">
@@ -32,6 +32,13 @@
     --ink:#f3f5f8;
     --crimson:#c0152a;
     --crimson-lit:#e8324a;
+    /* iOS Chrome 외부 링크 첫 진입에서 layout viewport와 실제 보이는
+       visual viewport가 어긋나는 동안에도 오프닝을 화면 안에 고정한다. */
+    --odyssey-vv-top:0px;
+    --odyssey-vv-left:0px;
+    --odyssey-vv-right:0px;
+    --odyssey-vv-width:100vw;
+    --odyssey-vv-height:100vh;
 }
 *{ margin:0; padding:0; box-sizing:border-box; }
 html,body{
@@ -189,10 +196,10 @@ body.entered #title-ui{ opacity:1; }
 }
 #fixed-top-left{
     position:fixed;
-    top:18px;
-    left:18px;
+    top:calc(var(--odyssey-vv-top) + max(18px, env(safe-area-inset-top)));
+    left:calc(var(--odyssey-vv-left) + max(18px, env(safe-area-inset-left)));
     /* 우상단 관람가이드 링크(약 96px + 여백) 자리를 비워둔다 */
-    right:130px;
+    right:calc(var(--odyssey-vv-right) + 130px);
     z-index:99999;
     pointer-events:none;
     display:flex;
@@ -252,8 +259,8 @@ body.entered #title-ui{ opacity:1; }
     position:fixed;
     /* 우상단 — 좌측 토글 캡슐(top 18 + 높이 22, 중심 29)과 세로 중심 정렬
        = 29 - 글자높이 9/2 = 24.5 */
-    top:24.5px;
-    right:18px;
+    top:calc(var(--odyssey-vv-top) + max(24.5px, calc(env(safe-area-inset-top) + 6.5px)));
+    right:calc(var(--odyssey-vv-right) + max(18px, env(safe-area-inset-right)));
     z-index:99999;
     font-size:9px;
     letter-spacing:.16em;
@@ -273,7 +280,9 @@ body.entered #title-ui{ opacity:1; }
     text-underline-offset:3px;
 }
 #opening{
-    position:fixed; inset:0;
+    /* fixed 전체화면 레이어는 iOS WebKit 콜드 스타트에서 잘못된 뷰포트에
+       고정될 수 있다. 바깥 검정막은 문서에 두고 실제 장면만 visual viewport에 맞춘다. */
+    position:absolute; inset:0;
     overflow:hidden;
     background:#000; z-index:88888;
     isolation:isolate;
@@ -286,8 +295,9 @@ body.entered #title-ui{ opacity:1; }
 }
 
 canvas#void{
-    position:absolute; inset:0;
-    width:100%; height:100%;
+    position:absolute; inset:auto;
+    top:var(--odyssey-vv-top); left:var(--odyssey-vv-left);
+    width:var(--odyssey-vv-width); height:var(--odyssey-vv-height);
     z-index:0; display:block;
 }
 
@@ -309,8 +319,9 @@ canvas#void{
 body.departing .bar{ height:clamp(70px,15vh,170px); transition:height 2.1s cubic-bezier(.16,1,.3,1); }
 
 #stage{
-    position:absolute; inset:0;
-    width:100%; height:100%;
+    position:absolute; inset:auto;
+    top:var(--odyssey-vv-top); left:var(--odyssey-vv-left);
+    width:var(--odyssey-vv-width); height:var(--odyssey-vv-height);
     z-index:20;
     display:flex; flex-direction:column; align-items:center; justify-content:flex-end;
     padding:0 24px calc(env(safe-area-inset-bottom) + clamp(48px,13vh,112px));
@@ -438,16 +449,16 @@ html.viewport-ready #depart{ animation:fadeUp 1.35s cubic-bezier(.16,1,.3,1) 2.4
    브라우저 크롬/노치에 의해 캡슐이 침범되지 않도록 제목을 비운다. */
 @media(max-width:1024px){
     #fixed-top-left{
-        top:max(16px, env(safe-area-inset-top));
-        left:max(16px, env(safe-area-inset-left));
+        top:calc(var(--odyssey-vv-top) + max(16px, env(safe-area-inset-top)));
+        left:calc(var(--odyssey-vv-left) + max(16px, env(safe-area-inset-left)));
         right:auto;
-        max-width:calc(100vw - max(16px, env(safe-area-inset-left)) - max(16px, env(safe-area-inset-right)));
+        max-width:calc(var(--odyssey-vv-width) - max(16px, env(safe-area-inset-left)) - max(16px, env(safe-area-inset-right)));
     }
     #title-ui{ display:none; }
     #guide-link{
         /* 동일 크기 캡슐의 중심선에 맞추고 iOS 좌우 안전영역을 확보한다. */
-        top:calc(max(16px, env(safe-area-inset-top)) + 6.5px);
-        right:max(16px, env(safe-area-inset-right)); font-size:8px; letter-spacing:.12em;
+        top:calc(var(--odyssey-vv-top) + max(16px, env(safe-area-inset-top)) + 6.5px);
+        right:calc(var(--odyssey-vv-right) + max(16px, env(safe-area-inset-right))); font-size:8px; letter-spacing:.12em;
     }
     #hint{
         bottom:max(20px, calc(env(safe-area-inset-bottom) + 10px));
@@ -532,23 +543,42 @@ body.arriving #preview{ opacity:0; animation:obsRise 1.5s cubic-bezier(.16,1,.3,
       Math.abs(a.openingTop-b.openingTop)<0.75 &&
       Math.abs(a.openingLeft-b.openingLeft)<0.75;
   }
+  function applyViewportBox(values){
+    root.style.setProperty('--odyssey-vv-top',values.offsetTop+'px');
+    root.style.setProperty('--odyssey-vv-left',values.offsetLeft+'px');
+    root.style.setProperty('--odyssey-vv-right',values.offsetRight+'px');
+    root.style.setProperty('--odyssey-vv-width',values.visualWidth+'px');
+    root.style.setProperty('--odyssey-vv-height',values.visualHeight+'px');
+  }
   function readViewport(){
     var vv=window.visualViewport;
+    var layoutWidth=rounded(document.documentElement.clientWidth || window.innerWidth);
+    var layoutHeight=rounded(document.documentElement.clientHeight || window.innerHeight);
+    var visualWidth=rounded(vv ? vv.width : window.innerWidth);
+    var visualHeight=rounded(vv ? vv.height : window.innerHeight);
+    var offsetTop=rounded(Math.max(0,vv ? vv.offsetTop : 0));
+    var offsetLeft=rounded(Math.max(0,vv ? vv.offsetLeft : 0));
+    var offsetRight=rounded(Math.max(0,layoutWidth-visualWidth-offsetLeft));
+    applyViewportBox({visualWidth:visualWidth,visualHeight:visualHeight,
+      offsetTop:offsetTop,offsetLeft:offsetLeft,offsetRight:offsetRight});
     var opening=document.getElementById('opening');
-    var rect=opening ? opening.getBoundingClientRect() : null;
+    var stage=document.getElementById('stage');
+    var rect=stage ? stage.getBoundingClientRect() : (opening ? opening.getBoundingClientRect() : null);
     return {
-      layoutWidth:rounded(document.documentElement.clientWidth || window.innerWidth),
-      layoutHeight:rounded(document.documentElement.clientHeight || window.innerHeight),
-      visualWidth:rounded(vv ? vv.width : window.innerWidth),
-      visualHeight:rounded(vv ? vv.height : window.innerHeight),
-      offsetTop:rounded(vv ? vv.offsetTop : 0),
-      offsetLeft:rounded(vv ? vv.offsetLeft : 0),
+      layoutWidth:layoutWidth,
+      layoutHeight:layoutHeight,
+      visualWidth:visualWidth,
+      visualHeight:visualHeight,
+      offsetTop:offsetTop,
+      offsetLeft:offsetLeft,
+      offsetRight:offsetRight,
       scale:rounded(vv ? vv.scale : 1),
       openingTop:rounded(rect ? rect.top : 0),
       openingLeft:rounded(rect ? rect.left : 0),
       openingWidth:rounded(rect ? rect.width : 0),
       openingHeight:rounded(rect ? rect.height : 0),
-      openingReady:!!(rect && rect.width>0 && rect.height>0)
+      openingReady:!!(rect && rect.width>0 && rect.height>0 &&
+        Math.abs(rect.width-visualWidth)<1.5 && Math.abs(rect.height-visualHeight)<1.5)
     };
   }
   function syncViewport(){
@@ -565,7 +595,7 @@ body.arriving #preview{ opacity:0; animation:obsRise 1.5s cubic-bezier(.16,1,.3,
 
     var elapsed=performance.now()-startedAt;
     if(!root.classList.contains('viewport-ready') && sample.openingReady &&
-       ((elapsed>=120 && stableReads>=2) || elapsed>=1200)){
+       ((elapsed>=180 && stableReads>=3) || elapsed>=900)){
       root.classList.add('viewport-ready');
     }
     clearTimeout(settleTimer);
@@ -582,6 +612,20 @@ body.arriving #preview{ opacity:0; animation:obsRise 1.5s cubic-bezier(.16,1,.3,
     queueViewportSync();
   }
   window.ODYSSEY_SYNC_VIEWPORT=function(){ restartSettling(1200); };
+  /* opening DOM이 만들어지기 전에도 첫 프레임에 사용할 실제 크기를 선반영한다. */
+  (function primeViewport(){
+    var vv=window.visualViewport;
+    var layoutWidth=rounded(document.documentElement.clientWidth || window.innerWidth);
+    var visualWidth=rounded(vv ? vv.width : window.innerWidth);
+    var offsetLeft=rounded(Math.max(0,vv ? vv.offsetLeft : 0));
+    applyViewportBox({
+      visualWidth:visualWidth,
+      visualHeight:rounded(vv ? vv.height : window.innerHeight),
+      offsetTop:rounded(Math.max(0,vv ? vv.offsetTop : 0)),
+      offsetLeft:offsetLeft,
+      offsetRight:rounded(Math.max(0,layoutWidth-visualWidth-offsetLeft))
+    });
+  })();
   queueViewportSync();
   addEventListener('resize',function(){ restartSettling(800); },{passive:true});
   addEventListener('orientationchange',function(){ setTimeout(function(){ restartSettling(1600); },120); },{passive:true});
@@ -638,7 +682,7 @@ body.arriving #preview{ opacity:0; animation:obsRise 1.5s cubic-bezier(.16,1,.3,
         <div class="coda-info">
             <strong>2026: A Digital Odyssey</strong>
             <span class="coda-sub">— Equations of the Abyss —</span>
-            김건우교수 제19회 개인전<br>2026.08.24–09.05 · 갤러리한빛
+            김건우 교수 제19회 개인전<br>2026.08.24–09.05 · 갤러리한빛
         </div>
         <button id="coda-close">RETURN</button>
     </div>
@@ -652,7 +696,7 @@ body.arriving #preview{ opacity:0; animation:obsRise 1.5s cubic-bezier(.16,1,.3,
         <span class="m-btn active" id="btn-cinematic" aria-current="page">Cinematic</span>
         <a href="all/index.html" class="m-btn" id="btn-archive">Archive</a>
     </div>
-    <div id="title-ui">김건우교수 제19회 개인전 · 2026.08.24–09.05 · 갤러리한빛</div>
+    <div id="title-ui">김건우 교수 제19회 개인전 · 2026.08.24–09.05 · 갤러리한빛</div>
 </div>
 <a id="guide-link" href="guide.html">관람가이드 · GUIDE</a>
 
