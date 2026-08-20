@@ -506,6 +506,30 @@ body.arriving #preview{ opacity:0; animation:obsRise 1.5s cubic-bezier(.16,1,.3,
 <body>
 
 <script>
+/* 공용 유틸 — 여러 캔버스/뷰포트 스크립트가 공통으로 쓰는 최소 헬퍼.
+   동작은 기존과 동일하게 유지하고 중복 구현만 한 곳으로 모은다. */
+function odysseyRaf1(fn){
+  var queued=false;
+  return function(){
+    if(queued) return;
+    queued=true;
+    requestAnimationFrame(function(){ queued=false; fn(); });
+  };
+}
+function odysseyCompileShader(gl, type, src){
+  var s=gl.createShader(type);
+  gl.shaderSource(s, src);
+  gl.compileShader(s);
+  if(!gl.getShaderParameter(s, gl.COMPILE_STATUS)){
+    console.warn(gl.getShaderInfoLog(s));
+    gl.deleteShader(s);
+    return null;
+  }
+  return s;
+}
+</script>
+
+<script>
 /* 외부 앱 -> iOS Chrome 콜드 스타트에서는 주소창과 visual viewport가
    pageshow 뒤에도 여러 번 바뀐다. fixed 레이어의 크기나 html/body 높이를
    그 일시값으로 덮어쓰지 않는다. 브라우저가 inset:0 레이어를 배치하게 두고,
@@ -750,6 +774,8 @@ const pvId = document.getElementById('pv-id');
 const pvPoetic = document.getElementById('pv-poetic');
 const pvHint = document.getElementById('pv-hint');
 const codaOverlay = document.getElementById('coda-overlay');
+const departBtn = document.getElementById('depart');
+const transitionLayer = document.getElementById('transition-layer');
 
 function getVisited(){
     try{ return JSON.parse(sessionStorage.getItem('odyssey_visited')||'[]'); }
@@ -855,8 +881,7 @@ function select(i, scrollIntoView){
 function voyage(i){
     markVisited(works[i].file);
     try{ sessionStorage.setItem('odyssey_interstitial', works[i].file); }catch(e){}
-    const layer = document.getElementById('transition-layer');
-    layer.classList.add('active');
+    transitionLayer.classList.add('active');
     setTimeout(() => { location.href = works[i].file; }, 900);
 }
 
@@ -937,8 +962,7 @@ if(arrivedAtCoda){
             if(embarking) return;
             embarking = true;
             const myGen = gen;
-            const d = document.getElementById('depart');
-            if(d) d.click();                        // 정상 경로 — EMBARK 워프를 그대로 재생
+            if(departBtn) departBtn.click();        // 정상 경로 — EMBARK 워프를 그대로 재생
             setTimeout(() => {
                 embarking = false;
                 if(gen !== myGen) return;           // 그 사이 관람객 입력이 있었으면 중단
@@ -1185,18 +1209,8 @@ void main(){
 }
 `;
 
-    function compileShader(type, src) {
-        const s = gl.createShader(type);
-        gl.shaderSource(s, src);
-        gl.compileShader(s);
-        if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
-            gl.deleteShader(s); return null;
-        }
-        return s;
-    }
-
-    const vs = compileShader(gl.VERTEX_SHADER, VS);
-    const fs = compileShader(gl.FRAGMENT_SHADER, FS);
+    const vs = odysseyCompileShader(gl, gl.VERTEX_SHADER, VS);
+    const fs = odysseyCompileShader(gl, gl.FRAGMENT_SHADER, FS);
     if (!vs || !fs) { startCanvasFallback(); return; }
     const prog = gl.createProgram();
     gl.attachShader(prog, vs); gl.attachShader(prog, fs);
@@ -1252,12 +1266,7 @@ void main(){
 
     /* 모바일 주소창 변화 등으로 연발하는 resize를 프레임당 1회로 병합 —
        매 이벤트마다 캔버스 백버퍼가 재할당되는 것을 방지 */
-    let resizeQueued = false;
-    function requestResize() {
-        if (resizeQueued) return;
-        resizeQueued = true;
-        requestAnimationFrame(() => { resizeQueued = false; resize(); });
-    }
+    const requestResize = odysseyRaf1(resize);
     window.addEventListener('resize', requestResize);
     window.addEventListener('orientationchange', () => setTimeout(requestResize, 120));
     window.addEventListener('odysseyviewportchange', requestResize);
@@ -1268,16 +1277,14 @@ void main(){
             if (bgRafId) cancelAnimationFrame(bgRafId);
             resize();
             render();
-            const layer = document.getElementById('transition-layer');
-            layer.classList.remove('active');
-            layer.style.opacity = '0';
-            const op = document.getElementById('opening');
+            transitionLayer.classList.remove('active');
+            transitionLayer.style.opacity = '0';
             if (sessionStorage.getItem('odyssey_entered')) {
-                op.style.transition = 'none';
-                op.style.opacity = '0';
-                op.style.visibility = 'hidden';
-                op.style.pointerEvents = 'none';
-                op.classList.add('hidden');
+                opening.style.transition = 'none';
+                opening.style.opacity = '0';
+                opening.style.visibility = 'hidden';
+                opening.style.pointerEvents = 'none';
+                opening.classList.add('hidden');
                 document.body.classList.add('entered');
             }
         }
@@ -1324,6 +1331,7 @@ void main(){
              sessionStorage.setItem('universe_seed', seed); }
 
   let cv = document.getElementById('void');
+  const openingFrame = document.getElementById('stage');
   const glOpt = { antialias:false, alpha:false, depth:false, stencil:false,
                   preserveDrawingBuffer:false, powerPreference: lowTier?'low-power':'high-performance' };
   let gl = cv.getContext('webgl', glOpt) || cv.getContext('experimental-webgl', glOpt);
@@ -1462,19 +1470,13 @@ void main(){
     gl_FragColor = vec4(col, 1.0);
 }`;
 
-  function compile(type, src){
-    const s=gl.createShader(type); gl.shaderSource(s,src); gl.compileShader(s);
-    if(!gl.getShaderParameter(s,gl.COMPILE_STATUS)){ console.warn(gl.getShaderInfoLog(s)); gl.deleteShader(s); return null; }
-    return s;
-  }
-
   let W,H, cx=0.5, cy=0.4, tcx=0.5, tcy=0.4;
   let raf=null, t0=performance.now(), dead=false;
   let phase='idle', dp=0, departStart=0, settleStart=0;
   const DEPART_MS = reduce ? 900 : 2100;
 
   function runGL(){
-    const vs=compile(gl.VERTEX_SHADER,VS), fs=compile(gl.FRAGMENT_SHADER,FS);
+    const vs=odysseyCompileShader(gl, gl.VERTEX_SHADER, VS), fs=odysseyCompileShader(gl, gl.FRAGMENT_SHADER, FS);
     if(!vs || !fs){ fallback2D(); return; }
     const prog=gl.createProgram(); gl.attachShader(prog,vs); gl.attachShader(prog,fs); gl.linkProgram(prog);
     if(!gl.getProgramParameter(prog,gl.LINK_STATUS)){ gl.deleteProgram(prog); fallback2D(); return; }
@@ -1493,8 +1495,6 @@ void main(){
     const uSeed=gl.getUniformLocation(prog,'u_seed');
     gl.uniform1f(uSeed, parseInt(seed,16)%1000);
 
-    const openingFrame=document.getElementById('stage');
-    let openingResizeQueued=false;
     function resize(){
       if(dead || !cv.isConnected) return;
       const box=openingFrame.getBoundingClientRect();
@@ -1508,10 +1508,10 @@ void main(){
       }
       cy=(H>W) ? 0.34 : 0.40; tcy=cy;
     }
+    const queueOpeningResize = odysseyRaf1(resize);
     function requestOpeningResize(){
-      if(openingResizeQueued || dead) return;
-      openingResizeQueued=true;
-      requestAnimationFrame(()=>{ openingResizeQueued=false; resize(); });
+      if(dead) return;
+      queueOpeningResize();
     }
     resize();
     window.addEventListener('resize',requestOpeningResize);
@@ -1573,7 +1573,6 @@ void main(){
     }
     const ctx=cv.getContext('2d');
     if(!ctx) return;
-    const openingFrame=document.getElementById('stage');
     function rs(){
       const box=openingFrame.getBoundingClientRect();
       W=Math.max(1,Math.round(box.width)); H=Math.max(1,Math.round(box.height));
@@ -1618,7 +1617,7 @@ void main(){
       setTimeout(function(){ phase='done'; onDepartComplete(); }, DEPART_MS);
     }
   }
-  document.getElementById('depart').addEventListener('click', depart);
+  departBtn.addEventListener('click', depart);
 
   if(!gl){ fallback2D(); } else { runGL(); }
 
