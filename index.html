@@ -473,7 +473,7 @@ html.viewport-ready #depart{ animation:fadeUp 1.35s cubic-bezier(.16,1,.3,1) 2.4
 
 @media(orientation:portrait){
     html.ios-chrome-entry{
-        --odyssey-ui-top-compensation:var(--odyssey-page-top);
+        --odyssey-ui-top-compensation:max(72px, min(128px, var(--odyssey-page-top)));
     }
 }
 
@@ -615,9 +615,6 @@ body.arriving #preview{ opacity:0; animation:obsRise 1.5s cubic-bezier(.16,1,.3,
     };
   }
   function syncViewport(){
-    if(window.scrollY !== 0 || window.scrollX !== 0){
-      window.scrollTo(0, 0);
-    }
     queued=false;
     var sample=readViewport();
     stableReads=near(sample,lastSample) ? stableReads+1 : 0;
@@ -649,9 +646,6 @@ body.arriving #preview{ opacity:0; animation:obsRise 1.5s cubic-bezier(.16,1,.3,
   }
   window.ODYSSEY_SYNC_VIEWPORT=function(){ restartSettling(1200); };
   (function primeViewport(){
-    if(window.scrollY !== 0 || window.scrollX !== 0){
-      window.scrollTo(0, 0);
-    }
     var vv=window.visualViewport;
     var layoutWidth=rounded(document.documentElement.clientWidth || window.innerWidth);
     var visualWidth=rounded(vv ? vv.width : window.innerWidth);
