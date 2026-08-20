@@ -32,11 +32,9 @@
     --ink:#f3f5f8;
     --crimson:#c0152a;
     --crimson-lit:#e8324a;
-    /* iOS Chrome 외부 링크 첫 진입에서 layout viewport와 실제 보이는
-       visual viewport가 어긋나는 동안에도 오프닝을 화면 안에 고정한다. */
-    --odyssey-vv-top:0px;
-    --odyssey-vv-left:0px;
-    --odyssey-vv-right:0px;
+    --odyssey-page-top:0px;
+    --odyssey-page-left:0px;
+    --odyssey-page-right:0px;
     --odyssey-vv-width:100vw;
     --odyssey-vv-height:100vh;
 }
@@ -195,18 +193,16 @@ body.entered #title-ui{ opacity:1; }
     font-weight:300;
 }
 #fixed-top-left{
-    position:fixed;
-    top:calc(var(--odyssey-vv-top) + max(18px, env(safe-area-inset-top)));
-    left:calc(var(--odyssey-vv-left) + max(18px, env(safe-area-inset-left)));
-    /* 우상단 관람가이드 링크(약 96px + 여백) 자리를 비워둔다 */
-    right:calc(var(--odyssey-vv-right) + 130px);
+    position:absolute;
+    top:calc(var(--odyssey-page-top) + max(18px, env(safe-area-inset-top)));
+    left:calc(var(--odyssey-page-left) + max(18px, env(safe-area-inset-left)));
+    right:calc(var(--odyssey-page-right) + 130px);
     z-index:99999;
     pointer-events:none;
     display:flex;
     align-items:center;
     gap:14px;
 }
-/* 블랙 캡슐 + 활성 항목은 흰 바탕·검은 글씨 필 */
 #mode-toggle{
     display:inline-flex;
     align-items:center;
@@ -249,18 +245,15 @@ body.entered #title-ui{ opacity:1; }
     outline:1px solid rgba(110,220,235,.85);
     outline-offset:3px;
 }
-/* 시각 크기는 유지하고 터치 히트 영역만 44px로 확장 */
 #mode-toggle .m-btn{ position:relative; }
 #mode-toggle .m-btn::after{
     content:''; position:absolute; left:0; right:0;
     top:50%; height:44px; transform:translateY(-50%);
 }
 #guide-link{
-    position:fixed;
-    /* 우상단 — 좌측 토글 캡슐(top 18 + 높이 22, 중심 29)과 세로 중심 정렬
-       = 29 - 글자높이 9/2 = 24.5 */
-    top:calc(var(--odyssey-vv-top) + max(24.5px, calc(env(safe-area-inset-top) + 6.5px)));
-    right:calc(var(--odyssey-vv-right) + max(18px, env(safe-area-inset-right)));
+    position:absolute;
+    top:calc(var(--odyssey-page-top) + max(24.5px, calc(env(safe-area-inset-top) + 6.5px)));
+    right:calc(var(--odyssey-page-right) + max(18px, env(safe-area-inset-right)));
     z-index:99999;
     font-size:9px;
     letter-spacing:.16em;
@@ -270,7 +263,6 @@ body.entered #title-ui{ opacity:1; }
     text-decoration:none;
     white-space:nowrap;
     transition:color .28s ease;
-    /* 터치 히트 영역 확장 — 음수 마진으로 시각 위치는 그대로 유지 */
     padding:10px 12px;
     margin:-10px -12px;
 }
@@ -280,8 +272,6 @@ body.entered #title-ui{ opacity:1; }
     text-underline-offset:3px;
 }
 #opening{
-    /* fixed 전체화면 레이어는 iOS WebKit 콜드 스타트에서 잘못된 뷰포트에
-       고정될 수 있다. 바깥 검정막은 문서에 두고 실제 장면만 visual viewport에 맞춘다. */
     position:absolute; inset:0;
     overflow:hidden;
     background:#000; z-index:88888;
@@ -296,7 +286,7 @@ body.entered #title-ui{ opacity:1; }
 
 canvas#void{
     position:absolute; inset:auto;
-    top:var(--odyssey-vv-top); left:var(--odyssey-vv-left);
+    top:var(--odyssey-page-top); left:var(--odyssey-page-left);
     width:var(--odyssey-vv-width); height:var(--odyssey-vv-height);
     z-index:0; display:block;
 }
@@ -320,7 +310,7 @@ body.departing .bar{ height:clamp(70px,15vh,170px); transition:height 2.1s cubic
 
 #stage{
     position:absolute; inset:auto;
-    top:var(--odyssey-vv-top); left:var(--odyssey-vv-left);
+    top:var(--odyssey-page-top); left:var(--odyssey-page-left);
     width:var(--odyssey-vv-width); height:var(--odyssey-vv-height);
     z-index:20;
     display:flex; flex-direction:column; align-items:center; justify-content:flex-end;
@@ -445,20 +435,17 @@ html.viewport-ready #depart{ animation:fadeUp 1.35s cubic-bezier(.16,1,.3,1) 2.4
     pointer-events:none; font-style:italic;
     font-family:'DM Mono',monospace;
 }
-/* 태블릿에서는 상단 안전영역을 우선한다. 769–1024px 장치도
-   브라우저 크롬/노치에 의해 캡슐이 침범되지 않도록 제목을 비운다. */
 @media(max-width:1024px){
     #fixed-top-left{
-        top:calc(var(--odyssey-vv-top) + max(16px, env(safe-area-inset-top)));
-        left:calc(var(--odyssey-vv-left) + max(16px, env(safe-area-inset-left)));
+        top:calc(var(--odyssey-page-top) + max(16px, env(safe-area-inset-top)));
+        left:calc(var(--odyssey-page-left) + max(16px, env(safe-area-inset-left)));
         right:auto;
         max-width:calc(var(--odyssey-vv-width) - max(16px, env(safe-area-inset-left)) - max(16px, env(safe-area-inset-right)));
     }
     #title-ui{ display:none; }
     #guide-link{
-        /* 동일 크기 캡슐의 중심선에 맞추고 iOS 좌우 안전영역을 확보한다. */
-        top:calc(var(--odyssey-vv-top) + max(16px, env(safe-area-inset-top)) + 6.5px);
-        right:calc(var(--odyssey-vv-right) + max(16px, env(safe-area-inset-right))); font-size:8px; letter-spacing:.12em;
+        top:calc(var(--odyssey-page-top) + max(16px, env(safe-area-inset-top)) + 6.5px);
+        right:calc(var(--odyssey-page-right) + max(16px, env(safe-area-inset-right))); font-size:8px; letter-spacing:.12em;
     }
     #hint{
         bottom:max(20px, calc(env(safe-area-inset-bottom) + 10px));
@@ -476,7 +463,6 @@ html.viewport-ready #depart{ animation:fadeUp 1.35s cubic-bezier(.16,1,.3,1) 2.4
 #arrive{position:fixed;inset:0;background:#000;z-index:9998;pointer-events:none;opacity:1;transition:opacity .8s ease}
 .row:focus-visible{outline:1px solid rgba(110,220,235,.6);outline-offset:-1px}
 
-/* ===== KIOSK / ATTRACT (무인 전시 자동재생) ===== */
 #attract-hint{
     position:fixed; left:50%;
     bottom:max(60px, calc(env(safe-area-inset-bottom) + 30px));
@@ -517,14 +503,10 @@ body.arriving #preview{ opacity:0; animation:obsRise 1.5s cubic-bezier(.16,1,.3,
 <body>
 
 <script>
-/* 외부 앱 -> iOS Chrome 콜드 스타트에서는 주소창과 visual viewport가
-   pageshow 뒤에도 여러 번 바뀐다. fixed 레이어의 크기나 html/body 높이를
-   그 일시값으로 덮어쓰지 않는다. 브라우저가 inset:0 레이어를 배치하게 두고,
-   실제 사각형이 안정된 뒤에만 오프닝 타이포그래피를 시작한다. */
 (function(){
   var root=document.documentElement;
   var queued=false, settleTimer=0;
-  var startedAt=performance.now(), settleUntil=startedAt+3200;
+  var startedAt=performance.now(), settleUntil=startedAt+6500;
   var stableReads=0, lastSample=null, lastApplied=null;
 
   function rounded(value){
@@ -538,15 +520,19 @@ body.arriving #preview{ opacity:0; animation:obsRise 1.5s cubic-bezier(.16,1,.3,
       Math.abs(a.layoutHeight-b.layoutHeight)<0.75 &&
       Math.abs(a.offsetTop-b.offsetTop)<0.75 &&
       Math.abs(a.offsetLeft-b.offsetLeft)<0.75 &&
+      Math.abs(a.pageTop-b.pageTop)<0.75 &&
+      Math.abs(a.pageLeft-b.pageLeft)<0.75 &&
       Math.abs(a.openingWidth-b.openingWidth)<0.75 &&
       Math.abs(a.openingHeight-b.openingHeight)<0.75 &&
       Math.abs(a.openingTop-b.openingTop)<0.75 &&
-      Math.abs(a.openingLeft-b.openingLeft)<0.75;
+      Math.abs(a.openingLeft-b.openingLeft)<0.75 &&
+      Math.abs(a.toggleTop-b.toggleTop)<0.75 &&
+      Math.abs(a.guideTop-b.guideTop)<0.75;
   }
   function applyViewportBox(values){
-    root.style.setProperty('--odyssey-vv-top',values.offsetTop+'px');
-    root.style.setProperty('--odyssey-vv-left',values.offsetLeft+'px');
-    root.style.setProperty('--odyssey-vv-right',values.offsetRight+'px');
+    root.style.setProperty('--odyssey-page-top',values.pageTop+'px');
+    root.style.setProperty('--odyssey-page-left',values.pageLeft+'px');
+    root.style.setProperty('--odyssey-page-right',values.pageRight+'px');
     root.style.setProperty('--odyssey-vv-width',values.visualWidth+'px');
     root.style.setProperty('--odyssey-vv-height',values.visualHeight+'px');
   }
@@ -556,29 +542,59 @@ body.arriving #preview{ opacity:0; animation:obsRise 1.5s cubic-bezier(.16,1,.3,
     var layoutHeight=rounded(document.documentElement.clientHeight || window.innerHeight);
     var visualWidth=rounded(vv ? vv.width : window.innerWidth);
     var visualHeight=rounded(vv ? vv.height : window.innerHeight);
+    var scrollX=rounded(window.scrollX || document.documentElement.scrollLeft || 0);
+    var scrollY=rounded(window.scrollY || document.documentElement.scrollTop || 0);
     var offsetTop=rounded(Math.max(0,vv ? vv.offsetTop : 0));
     var offsetLeft=rounded(Math.max(0,vv ? vv.offsetLeft : 0));
-    var offsetRight=rounded(Math.max(0,layoutWidth-visualWidth-offsetLeft));
+    var rawPageTop=rounded(Math.max(0,vv && Number.isFinite(vv.pageTop) ? vv.pageTop : scrollY+offsetTop));
+    var rawPageLeft=rounded(Math.max(0,vv && Number.isFinite(vv.pageLeft) ? vv.pageLeft : scrollX+offsetLeft));
+    var bodyRect=document.body ? document.body.getBoundingClientRect() : null;
+    var paintedPageTop=rounded(bodyRect ? Math.max(0,-bodyRect.top) : 0);
+    var paintedPageLeft=rounded(bodyRect ? Math.max(0,-bodyRect.left) : 0);
+    var pageTop=rounded(Math.max(rawPageTop,scrollY+offsetTop,paintedPageTop));
+    var pageLeft=rounded(Math.max(rawPageLeft,scrollX+offsetLeft,paintedPageLeft));
+    var pageRight=rounded(Math.max(0,layoutWidth-visualWidth-pageLeft));
     applyViewportBox({visualWidth:visualWidth,visualHeight:visualHeight,
-      offsetTop:offsetTop,offsetLeft:offsetLeft,offsetRight:offsetRight});
+      pageTop:pageTop,pageLeft:pageLeft,pageRight:pageRight});
     var opening=document.getElementById('opening');
     var stage=document.getElementById('stage');
+    var toggle=document.getElementById('fixed-top-left');
+    var guide=document.getElementById('guide-link');
     var rect=stage ? stage.getBoundingClientRect() : (opening ? opening.getBoundingClientRect() : null);
+    var toggleRect=toggle ? toggle.getBoundingClientRect() : null;
+    var guideRect=guide ? guide.getBoundingClientRect() : null;
+    function inside(rectangle){
+      return !!(rectangle && rectangle.width>0 && rectangle.height>0 &&
+        rectangle.top>=-1.5 && rectangle.left>=-1.5 &&
+        rectangle.right<=visualWidth+1.5 && rectangle.bottom<=visualHeight+1.5);
+    }
     return {
       layoutWidth:layoutWidth,
       layoutHeight:layoutHeight,
       visualWidth:visualWidth,
       visualHeight:visualHeight,
+      scrollX:scrollX,
+      scrollY:scrollY,
       offsetTop:offsetTop,
       offsetLeft:offsetLeft,
-      offsetRight:offsetRight,
+      rawPageTop:rawPageTop,
+      rawPageLeft:rawPageLeft,
+      paintedPageTop:paintedPageTop,
+      paintedPageLeft:paintedPageLeft,
+      pageTop:pageTop,
+      pageLeft:pageLeft,
+      pageRight:pageRight,
       scale:rounded(vv ? vv.scale : 1),
       openingTop:rounded(rect ? rect.top : 0),
       openingLeft:rounded(rect ? rect.left : 0),
       openingWidth:rounded(rect ? rect.width : 0),
       openingHeight:rounded(rect ? rect.height : 0),
+      toggleTop:rounded(toggleRect ? toggleRect.top : 0),
+      guideTop:rounded(guideRect ? guideRect.top : 0),
       openingReady:!!(rect && rect.width>0 && rect.height>0 &&
-        Math.abs(rect.width-visualWidth)<1.5 && Math.abs(rect.height-visualHeight)<1.5)
+        Math.abs(rect.top)<1.5 && Math.abs(rect.left)<1.5 &&
+        Math.abs(rect.width-visualWidth)<1.5 && Math.abs(rect.height-visualHeight)<1.5 &&
+        inside(toggleRect) && inside(guideRect))
     };
   }
   function syncViewport(){
@@ -595,7 +611,7 @@ body.arriving #preview{ opacity:0; animation:obsRise 1.5s cubic-bezier(.16,1,.3,
 
     var elapsed=performance.now()-startedAt;
     if(!root.classList.contains('viewport-ready') && sample.openingReady &&
-       ((elapsed>=180 && stableReads>=3) || elapsed>=900)){
+       elapsed>=180 && stableReads>=3){
       root.classList.add('viewport-ready');
     }
     clearTimeout(settleTimer);
@@ -612,30 +628,36 @@ body.arriving #preview{ opacity:0; animation:obsRise 1.5s cubic-bezier(.16,1,.3,
     queueViewportSync();
   }
   window.ODYSSEY_SYNC_VIEWPORT=function(){ restartSettling(1200); };
-  /* opening DOM이 만들어지기 전에도 첫 프레임에 사용할 실제 크기를 선반영한다. */
   (function primeViewport(){
     var vv=window.visualViewport;
     var layoutWidth=rounded(document.documentElement.clientWidth || window.innerWidth);
     var visualWidth=rounded(vv ? vv.width : window.innerWidth);
+    var scrollX=rounded(window.scrollX || 0);
+    var scrollY=rounded(window.scrollY || 0);
+    var offsetTop=rounded(Math.max(0,vv ? vv.offsetTop : 0));
     var offsetLeft=rounded(Math.max(0,vv ? vv.offsetLeft : 0));
+    var pageTop=rounded(Math.max(0,vv && Number.isFinite(vv.pageTop) ? vv.pageTop : scrollY+offsetTop));
+    var pageLeft=rounded(Math.max(0,vv && Number.isFinite(vv.pageLeft) ? vv.pageLeft : scrollX+offsetLeft));
     applyViewportBox({
       visualWidth:visualWidth,
       visualHeight:rounded(vv ? vv.height : window.innerHeight),
-      offsetTop:rounded(Math.max(0,vv ? vv.offsetTop : 0)),
-      offsetLeft:offsetLeft,
-      offsetRight:rounded(Math.max(0,layoutWidth-visualWidth-offsetLeft))
+      pageTop:pageTop,
+      pageLeft:pageLeft,
+      pageRight:rounded(Math.max(0,layoutWidth-visualWidth-pageLeft))
     });
   })();
   queueViewportSync();
-  addEventListener('resize',function(){ restartSettling(800); },{passive:true});
-  addEventListener('orientationchange',function(){ setTimeout(function(){ restartSettling(1600); },120); },{passive:true});
-  addEventListener('pageshow',function(){ restartSettling(1600); },{passive:true});
+  addEventListener('load',function(){ restartSettling(6500); },{once:true,passive:true});
+  addEventListener('resize',function(){ restartSettling(1600); },{passive:true});
+  addEventListener('scroll',function(){ restartSettling(1600); },{passive:true});
+  addEventListener('orientationchange',function(){ setTimeout(function(){ restartSettling(3200); },120); },{passive:true});
+  addEventListener('pageshow',function(){ restartSettling(6500); },{passive:true});
   document.addEventListener('visibilitychange',function(){
-    if(document.visibilityState==='visible') restartSettling(1200);
+    if(document.visibilityState==='visible') restartSettling(3200);
   },{passive:true});
   if(window.visualViewport){
-    visualViewport.addEventListener('resize',queueViewportSync,{passive:true});
-    visualViewport.addEventListener('scroll',queueViewportSync,{passive:true});
+    visualViewport.addEventListener('resize',function(){ restartSettling(1600); },{passive:true});
+    visualViewport.addEventListener('scroll',function(){ restartSettling(1600); },{passive:true});
   }
   requestAnimationFrame(function(){ requestAnimationFrame(queueViewportSync); });
 })();
@@ -731,15 +753,13 @@ if (sessionStorage.getItem('odyssey_entered') || arrivedAtCoda) {
     opening.classList.add('hidden');
     document.body.classList.add('entered');
 } else {
-    /* 오프닝이 화면을 덮는 동안 뒤에 깔린 관측소 UI는 초점·보조기기 트리에서 제외.
-       단 모드 토글·관람가이드·프로젝터 링크는 오프닝 위에 떠 있는 요소이므로 그대로 살려 둔다. */
     ['obs'].forEach(id =>
         document.getElementById(id).setAttribute('inert',''));
 }
 
 function enterObservatory(){
     ['obs','fixed-top-left'].forEach(id =>
-        document.getElementById(id).removeAttribute('inert'));   /* fixed-top-left는 오프닝에서도 활성이라 no-op */
+        document.getElementById(id).removeAttribute('inert'));
     sessionStorage.setItem('odyssey_entered','1');
     if(!matchMedia('(prefers-reduced-motion:reduce)').matches){
         document.body.classList.add('arriving');
@@ -759,7 +779,6 @@ function enterObservatory(){
 window.ODYSSEY_ON_DEPART = enterObservatory;
 
 const isTouch = matchMedia('(pointer:coarse)').matches;
-/* 입력 방식별 안내 문구: 터치 기기(태블릿·스마트폰)는 2탭 진입 방식을 안내 */
 if(isTouch) document.getElementById('hint').textContent = '* 작품명을 선택한 후, 탭하면 우주로 진입합니다';
 const listEl = document.getElementById('worklist');
 const pvFrame = document.getElementById('pv-frame');
@@ -781,8 +800,6 @@ let rows = [];
 let sel = -1;
 let pvTimer = null, pvCurrent = '';
 
-/* 프리뷰 패널이 뷰포트에 실제로 보일 때만 iframe(작품 캔버스)을 활성화.
-   로드 시점마다 동기적으로 판정 — 세로 화면 등에서 숨겨지면 로드하지 않는다. */
 function previewOnScreen(){
     const box = document.getElementById('preview');
     if(pvFrame.offsetParent === null) return false;
@@ -854,11 +871,8 @@ function select(i, scrollIntoView){
     pvHint.style.display = 'none';
     clearTimeout(pvTimer);
     pvTimer = setTimeout(() => {
-        /* 디바운스 후에도 즉시 로드하지 않고 다음 프레임에서 가시성을 재확인 —
-           스쳐 지나가는 호버가 무거운 작품 씬을 곧바로 띄우지 않도록 한다 */
         requestAnimationFrame(() => {
             if(!previewOnScreen()){
-                /* 프리뷰가 화면에 없으면(세로 화면 등) 로드하지 않고, 남아있던 씬도 회수 */
                 if(pvCurrent){ pvCurrent = ''; pvFrame.src = 'about:blank'; }
                 return;
             }
@@ -891,17 +905,13 @@ function closeCoda(){
 }
 document.getElementById('coda-close').addEventListener('click', closeCoda);
 codaOverlay.addEventListener('click', e => { if(e.target === codaOverlay) closeCoda(); });
-/* 다이얼로그 내 유일한 포커스 요소(RETURN)에서 Tab이 배경으로 새지 않도록 고정 */
 codaOverlay.addEventListener('keydown', e => {
     if(e.key === 'Tab'){ e.preventDefault(); document.getElementById('coda-close').focus(); }
 });
 
 addEventListener('keydown', e => {
     if(codaOverlay.classList.contains('show')){ if(e.key === 'Escape') closeCoda(); return; }
-    /* 오프닝 화면에서는 목록 단축키를 받지 않는다 — Enter가 EMBARK를 건너뛰고
-       작품으로 직행하는 것을 방지 */
     if(!document.body.classList.contains('entered')) return;
-    /* 행·링크·버튼에 초점이 있으면 각자의 Enter 처리에 맡긴다 (이중 발화 방지) */
     if(e.key === 'Enter' && e.target instanceof Element && e.target.closest('.row, a, button')) return;
     if(e.key === 'ArrowDown'){ e.preventDefault(); select(Math.min(works.length-1, sel < 0 ? 0 : sel+1), true); }
     else if(e.key === 'ArrowUp'){ e.preventDefault(); select(Math.max(0, sel < 0 ? 0 : sel-1), true); }
@@ -921,10 +931,6 @@ if(arrivedAtCoda){
     setTimeout(showCoda, 600);
 }
 
-/* ===== KIOSK / ATTRACT MODE — 무인 전시 운영 =====
-   진입: index.html?kiosk=1  (해제: index.html?kiosk=0)
-   ATTRACT_MS 무입력 → 프리뷰 자동 순회, RESET_MS 무입력 → 오프닝으로 리셋.
-   관람객이 화면을 만지면 즉시 중단하고 관람권을 넘긴다. */
 (function(){
     const qs = new URLSearchParams(location.search);
     if(qs.get('kiosk') === '1') sessionStorage.setItem('odyssey_kiosk','1');
@@ -948,8 +954,6 @@ if(arrivedAtCoda){
         if(attracting) return;
         if(codaOverlay.classList.contains('show')) return;
         if(!works.length) return;
-        /* 오프닝 화면이면 EMBARK를 대신 눌러 관측소로 진입한 뒤 순회를 시작한다.
-           (관람객이 아무도 없을 때 오프닝 화면만 무한 반복되는 것을 막는다) */
         if(opening && !opening.classList.contains('hidden')){
             if(embarking) return;
             embarking = true;
@@ -959,8 +963,6 @@ if(arrivedAtCoda){
             setTimeout(() => {
                 embarking = false;
                 if(gen !== myGen) return;           // 그 사이 관람객 입력이 있었으면 중단
-                /* 워프가 끝나지 않았다면(탭 비활성 등으로 rAF가 멈춘 경우)
-                   재시도로 맴돌지 말고 관측소로 직접 넘긴다 */
                 if(opening && !opening.classList.contains('hidden')) enterObservatory();
                 startAttract();
             }, EMBARK_MS);
@@ -1256,7 +1258,6 @@ void main(){
     function render(now = performance.now()) {
         bgRafId = requestAnimationFrame(render);
         if (now - lastFrame < frameInterval) return;
-        /* 오프닝(#void)이 화면을 덮고 있는 동안은 그리지 않는다 — 이중 렌더링 방지 */
         if (!document.body.classList.contains('entered')) return;
         lastFrame = now - ((now - lastFrame) % frameInterval);
         const t = (now - startTime) * 0.001;
@@ -1267,8 +1268,6 @@ void main(){
     }
     render();
 
-    /* 모바일 주소창 변화 등으로 연발하는 resize를 프레임당 1회로 병합 —
-       매 이벤트마다 캔버스 백버퍼가 재할당되는 것을 방지 */
     let resizeQueued = false;
     function requestResize() {
         if (resizeQueued) return;
@@ -1614,8 +1613,6 @@ void main(){
 
   function onDepartComplete(){
     if(typeof window.ODYSSEY_ON_DEPART==='function') window.ODYSSEY_ON_DEPART(seed);
-    /* 오프닝이 완전히 사라진 뒤(페이드 1.5s) 렌더 루프를 영구 정지하고
-       GL 컨텍스트를 해제 — 관측소 뒤에서 이중 렌더링되는 것을 차단 */
     setTimeout(function(){
       dead = true;
       if(raf){ cancelAnimationFrame(raf); raf=null; }
@@ -1630,7 +1627,6 @@ void main(){
     phase='depart'; departStart=performance.now();
     document.body.classList.add('departing');
     sessionStorage.setItem('odyssey_entered','1');
-    /* 2D 폴백에서는 GL 루프가 phase를 진행시키지 못하므로 직접 완료시킨다 */
     if(usingFallback){
       setTimeout(function(){ phase='done'; onDepartComplete(); }, DEPART_MS);
     }
