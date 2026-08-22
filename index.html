@@ -32,6 +32,10 @@
     --ink:#f3f5f8;
     --crimson:#c0152a;
     --crimson-lit:#e8324a;
+    --odyssey-ui-vv-top:0px;
+    --odyssey-ui-vv-left:0px;
+    --odyssey-ui-vv-right:0px;
+    --odyssey-ui-vv-width:100vw;
 }
 *{ margin:0; padding:0; box-sizing:border-box; }
 html,body{
@@ -189,15 +193,20 @@ body.entered #title-ui{ opacity:1; }
 }
 #fixed-top-left{
     position:fixed;
-    top:18px;
-    left:18px;
+    top:calc(var(--odyssey-ui-vv-top) + max(18px, env(safe-area-inset-top)));
+    left:calc(var(--odyssey-ui-vv-left) + max(18px, env(safe-area-inset-left)));
     /* 우상단 관람가이드 링크(약 96px + 여백) 자리를 비워둔다 */
-    right:130px;
-    z-index:99999;
+    right:calc(var(--odyssey-ui-vv-right) + 130px);
+    z-index:2147483647;
     pointer-events:none;
     display:flex;
     align-items:center;
     gap:14px;
+    -webkit-transform:translate3d(0,0,0);
+    transform:translate3d(0,0,0);
+    -webkit-backface-visibility:hidden;
+    backface-visibility:hidden;
+    will-change:transform;
 }
 /* 블랙 캡슐 + 활성 항목은 흰 바탕·검은 글씨 필 */
 #mode-toggle{
@@ -252,9 +261,9 @@ body.entered #title-ui{ opacity:1; }
     position:fixed;
     /* 우상단 — 좌측 토글 캡슐(top 18 + 높이 22, 중심 29)과 세로 중심 정렬
        = 29 - 글자높이 9/2 = 24.5 */
-    top:24.5px;
-    right:18px;
-    z-index:99999;
+    top:calc(var(--odyssey-ui-vv-top) + max(24.5px, calc(env(safe-area-inset-top) + 6.5px)));
+    right:calc(var(--odyssey-ui-vv-right) + max(18px, env(safe-area-inset-right)));
+    z-index:2147483647;
     font-size:9px;
     letter-spacing:.16em;
     font-weight:400;
@@ -266,6 +275,11 @@ body.entered #title-ui{ opacity:1; }
     /* 터치 히트 영역 확장 — 음수 마진으로 시각 위치는 그대로 유지 */
     padding:10px 12px;
     margin:-10px -12px;
+    -webkit-transform:translate3d(0,0,0);
+    transform:translate3d(0,0,0);
+    -webkit-backface-visibility:hidden;
+    backface-visibility:hidden;
+    will-change:transform;
 }
 #guide-link:hover{
     color:rgba(110,220,235,1);
@@ -438,16 +452,16 @@ html.viewport-ready #depart{ animation:fadeUp 1.35s cubic-bezier(.16,1,.3,1) 2.4
    브라우저 크롬/노치에 의해 캡슐이 침범되지 않도록 제목을 비운다. */
 @media(max-width:1024px){
     #fixed-top-left{
-        top:max(16px, env(safe-area-inset-top));
-        left:max(16px, env(safe-area-inset-left));
+        top:calc(var(--odyssey-ui-vv-top) + max(16px, env(safe-area-inset-top)));
+        left:calc(var(--odyssey-ui-vv-left) + max(16px, env(safe-area-inset-left)));
         right:auto;
-        max-width:calc(100vw - max(16px, env(safe-area-inset-left)) - max(16px, env(safe-area-inset-right)));
+        max-width:calc(var(--odyssey-ui-vv-width) - max(16px, env(safe-area-inset-left)) - max(16px, env(safe-area-inset-right)));
     }
     #title-ui{ display:none; }
     #guide-link{
         /* 동일 크기 캡슐의 중심선에 맞추고 iOS 좌우 안전영역을 확보한다. */
-        top:calc(max(16px, env(safe-area-inset-top)) + 6.5px);
-        right:max(16px, env(safe-area-inset-right)); font-size:8px; letter-spacing:.12em;
+        top:calc(var(--odyssey-ui-vv-top) + max(16px, env(safe-area-inset-top)) + 6.5px);
+        right:calc(var(--odyssey-ui-vv-right) + max(16px, env(safe-area-inset-right))); font-size:8px; letter-spacing:.12em;
     }
     #hint{
         bottom:max(20px, calc(env(safe-area-inset-bottom) + 10px));
@@ -511,31 +525,65 @@ body.arriving #preview{ opacity:0; animation:obsRise 1.5s cubic-bezier(.16,1,.3,
    그 일시값으로 덮어쓰지 않는다. 브라우저가 inset:0 레이어를 배치하게 두고,
    실제 사각형이 안정된 뒤에만 오프닝 타이포그래피를 시작한다. */
 (function(){
+  var root=document.documentElement;
   var ua=window.navigator && window.navigator.userAgent || '';
   var appleTouch=/iPhone|iPad|iPod/i.test(ua) ||
     (/Macintosh/i.test(ua) && window.navigator.maxTouchPoints>1);
-  var vv=window.visualViewport;
-  var portrait=window.matchMedia('(orientation:portrait)').matches ||
-    ((vv ? vv.height : window.innerHeight)>=(vv ? vv.width : window.innerWidth));
-  var marker='odyssey-ios-portrait-reload-v1';
-  var fallback='odyssey-ios-portrait-reload-fallback-v1';
-  var state=history.state || {};
-  var hasReloaded=!!state[marker];
-  var entered=false;
+  var iosExternalBrowser=/CriOS|KAKAOTALK/i.test(ua);
+  function isPortrait(){
+    var vv=window.visualViewport;
+    return window.matchMedia('(orientation:portrait)').matches ||
+      ((vv ? vv.height : window.innerHeight)>=(vv ? vv.width : window.innerWidth));
+  }
+  if(appleTouch && iosExternalBrowser && isPortrait()) root.classList.add('ios-portrait-entry');
+
+  var marker='odyssey-ios-portrait-reload-v2';
+  var fallback='odyssey-ios-portrait-reload-fallback-v2:'+location.pathname;
+  var state=history.state && typeof history.state==='object' ? history.state : {};
+  var navigation=performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+  var hasReloaded=!!state[marker] || !!(navigation && navigation.type==='reload');
+  var fallbackAt=0, entered=false;
   try{
-    if(hasReloaded) sessionStorage.removeItem(fallback);
-    else if(sessionStorage.getItem(fallback)==='1') hasReloaded=true;
+    fallbackAt=parseInt(sessionStorage.getItem(fallback)||'0',10)||0;
+    if(Date.now()-fallbackAt<15000) hasReloaded=true;
     entered=sessionStorage.getItem('odyssey_entered')==='1';
   }catch(e){}
-  if(!appleTouch || !portrait || hasReloaded || entered) return;
-  try{ sessionStorage.setItem(fallback,'1'); }catch(e){}
-  try{
-    var nextState={};
-    for(var key in state){ if(Object.prototype.hasOwnProperty.call(state,key)) nextState[key]=state[key]; }
-    nextState[marker]=true;
-    history.replaceState(nextState,'',location.href);
-  }catch(e){}
-  location.reload();
+  if(!appleTouch || !iosExternalBrowser || !isPortrait() || hasReloaded || entered) return;
+
+  root.classList.add('ios-portrait-reload-pending');
+  function reloadOnce(){
+    var nowState=history.state && typeof history.state==='object' ? history.state : {};
+    var alreadyEntered=false;
+    try{ alreadyEntered=sessionStorage.getItem('odyssey_entered')==='1'; }catch(e){}
+    if(!isPortrait() || alreadyEntered || nowState[marker]){
+      root.classList.remove('ios-portrait-reload-pending');
+      return;
+    }
+    try{ sessionStorage.setItem(fallback,String(Date.now())); }catch(e){}
+    try{
+      var nextState={};
+      for(var key in nowState){ if(Object.prototype.hasOwnProperty.call(nowState,key)) nextState[key]=nowState[key]; }
+      nextState[marker]=true;
+      history.replaceState(nextState,'',location.href);
+    }catch(e){}
+    root.classList.remove('ios-portrait-reload-pending');
+    location.reload();
+  }
+  function afterVisiblePaint(){
+    if(document.visibilityState==='hidden'){
+      document.addEventListener('visibilitychange',function onVisible(){
+        if(document.visibilityState!=='visible') return;
+        document.removeEventListener('visibilitychange',onVisible);
+        afterVisiblePaint();
+      });
+      return;
+    }
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){ setTimeout(reloadOnce,650); });
+    });
+  }
+  if(document.readyState==='complete') afterVisiblePaint();
+  else addEventListener('load',afterVisiblePaint,{once:true});
 })();
 (function(){
   var root=document.documentElement;
@@ -581,6 +629,16 @@ body.arriving #preview{ opacity:0; animation:obsRise 1.5s cubic-bezier(.16,1,.3,
   function syncViewport(){
     queued=false;
     var sample=readViewport();
+    var iosPortraitEntry=root.classList.contains('ios-portrait-entry') &&
+      window.matchMedia('(orientation:portrait)').matches;
+    var topOffset=iosPortraitEntry ? Math.max(0,sample.offsetTop) : 0;
+    var leftOffset=iosPortraitEntry ? Math.max(0,sample.offsetLeft) : 0;
+    var rightOffset=iosPortraitEntry ?
+      Math.max(0,sample.layoutWidth-sample.offsetLeft-sample.visualWidth) : 0;
+    root.style.setProperty('--odyssey-ui-vv-top',topOffset+'px');
+    root.style.setProperty('--odyssey-ui-vv-left',leftOffset+'px');
+    root.style.setProperty('--odyssey-ui-vv-right',rightOffset+'px');
+    root.style.setProperty('--odyssey-ui-vv-width',(iosPortraitEntry ? sample.visualWidth : sample.layoutWidth)+'px');
     stableReads=near(sample,lastSample) ? stableReads+1 : 0;
     lastSample=sample;
 
