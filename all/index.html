@@ -9,10 +9,10 @@
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon_io/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon_io/favicon-16x16.png">
 <link rel="shortcut icon" href="../favicon_io/favicon.ico">
-<meta name="description" content="김건우교수 제19회 개인전 아카이브 — 15개 작품 전체 목록 및 관람 색인."/>
+<meta name="description" content="김건우 교수 제19회 개인전 아카이브 — 15개 작품 전체 목록 및 관람 색인."/>
 <meta property="og:type" content="website"/>
 <meta property="og:title" content="THE ARCHIVE · 2026: a digital odyssey">
-<meta property="og:description" content="김건우교수 제19회 개인전 아카이브 — 15개 작품 전체 목록 및 관람 색인.">
+<meta property="og:description" content="김건우 교수 제19회 개인전 아카이브 — 15개 작품 전체 목록 및 관람 색인.">
 <meta property="og:url" content="https://kimgunwoo.kr/19th/all/"/>
 <link rel="canonical" href="https://kimgunwoo.kr/19th/all/">
 <meta property="og:image" content="https://kimgunwoo.kr/19th/og/all-index.jpg"/>
@@ -83,6 +83,19 @@ header h1 .thin { display:block; font-weight:400; letter-spacing:-.09em; }
   color: #000;
   cursor: default;
 }
+#gallery-talk-link {
+  position: fixed;
+  top: calc(20px + var(--vv-top));
+  right: calc(20px + var(--vv-right));
+  z-index: 99999;
+  color: var(--ink);
+  font: 500 9px/1 'DM Mono', monospace;
+  letter-spacing: .12em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+#gallery-talk-link:hover,
+#gallery-talk-link:focus-visible { text-decoration: underline; text-underline-offset: .32em; }
 #mode-toggle .m-btn:not(.active):hover {
   color: #fff;
 }
@@ -182,6 +195,8 @@ body.archive-scrolled #archive-scroll-cue {
 .card-title { grid-column:2; margin:0; color:var(--ink); font-size:clamp(21px,2.35vw,37px); font-weight:400; line-height:.92; letter-spacing:-.07em; text-decoration:none; word-break:keep-all; }
 .card-formula { grid-column:4; grid-row:1; margin:0; color:var(--muted); font:10px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; letter-spacing:-.04em; }
 .card-desc { grid-column:3; grid-row:1 / span 2; margin:0; color:var(--ink); font-size:clamp(12px,.95vw,14px); line-height:1.6; letter-spacing:-.04em; word-break:keep-all; }
+.card-desc-link { display:block; color:inherit; text-decoration:none; }
+.card-desc-link:focus-visible { outline:1px solid currentColor; outline-offset:6px; }
 .card-interaction { display:block; margin-top:13px; color:var(--muted); background:none; font:10px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; letter-spacing:.02em; }
 .card-footer { grid-column:4; grid-row:2; display:flex; flex-direction:column; align-items:flex-start; gap:4px; }
 .tag { color:var(--muted); font:9px/1.45 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; letter-spacing:.04em; text-transform:uppercase; }
@@ -251,8 +266,9 @@ footer.foot { padding:13px 0 0; border-top:1px solid var(--ink); }
 <a class="m-btn" href="../index.html" id="btn-cinematic">Cinematic</a>
 <span class="m-btn active" id="btn-archive" aria-current="page">Archive</span>
 </div>
-<div id="title-ui">김건우교수 제19회 개인전 · 2026.08.24–09.05 · 갤러리한빛</div>
+<div id="title-ui">김건우 교수 제19회 개인전 · 2026.08.24–09.05 · 갤러리한빛</div>
 </div>
+<a id="gallery-talk-link" href="../gallerytalk-text.html">GALLERY TALK TEXT ↗</a>
 <a id="archive-scroll-cue" href="#archive-grid" aria-label="작품 목록으로 아래로 스크롤">
 <span class="cue-label">작품 목록 · 아래로 스크롤</span>
 <span class="cue-mouse" aria-hidden="true"><span class="cue-wheel"></span></span>
@@ -278,7 +294,8 @@ footer.foot { padding:13px 0 0; border-top:1px solid var(--ink); }
 <a class="card-title" href="01-RGB_Galaxy.html">RGB Galaxy Engine</a>
 </div>
 <div class="card-formula">r = √i×1.6 · θ = i×0.013 + arm×2π/3  ·  3-Arm · GLSL Bloom · Chromatic Aberration</div>
-<div class="card-desc">3개의 나선 팔이 회전하며 하나의 은하로 태어난다. 데스크톱 기준 25만 개의 입자가 페르마 나선을 따라 제자리를 찾고, 배경의 색온도는 삼각함수의 주기를 따라 천천히 숨 쉰다. 마우스를 움직이면 은하 전체가 기울고, 카메라는 스스로 그 주위를 공전한다. <span class="card-interaction">Mouse Move · Galaxy Rotation</span></div>
+<div class="card-desc"><a class="card-desc-link" href="01-RGB_Galaxy.html">3개의 나선 팔이 회전하며 하나의 은하로 태어난다. 데스크톱 기준 25만 개의 입자가 페르마 나선을 따라 제자리를 찾고, 배경의 색온도는 삼각함수의 주기를 따라 천천히 숨 쉰다. 마우스를 움직이면 은하 전체가 기울고, 카메라는 스스로 그 주위를 공전한다. 
+  <span class="card-interaction">Mouse Move · Galaxy Rotation</span></a></div>
 <div class="card-footer"><span class="tag">Procedural Galaxy</span><span class="tag">Particle Dynamics</span><span class="tag">Chromatic Bloom</span></div>
 </div>
 <div class="card">
@@ -287,7 +304,7 @@ footer.foot { padding:13px 0 0; border-top:1px solid var(--ink); }
 <a class="card-title" href="02-Hyperbolic_Nebula.html">Hyperbolic Nebula</a>
 </div>
 <div class="card-formula">z = sinh(u)·cosh(v) − tanh(r)  ·  55,000 pts · GLSL FBM Noise</div>
-<div class="card-desc">구름과 해안선, 능선을 빚어내는 자연의 문법 — 쌍곡선 함수(sinh·cosh·tanh)로 좌표를 얻은 5만 5천 개의 입자와 3차원 노이즈로 흐르는 성운이 겹쳐진다. 성운은 스스로 유동하고, 마우스를 따라 카메라가 부드럽게 미끄러지며 그 안개의 깊이를 들여다본다. <span class="card-interaction">Mouse · Parallax Camera</span></div>
+<div class="card-desc"><a class="card-desc-link" href="02-Hyperbolic_Nebula.html">구름과 해안선, 능선을 빚어내는 자연의 문법 — 쌍곡선 함수(sinh·cosh·tanh)로 좌표를 얻은 5만 5천 개의 입자와 3차원 노이즈로 흐르는 성운이 겹쳐진다. 성운은 스스로 유동하고, 마우스를 따라 카메라가 부드럽게 미끄러지며 그 안개의 깊이를 들여다본다. <span class="card-interaction">Mouse · Parallax Camera</span></a></div>
 <div class="card-footer"><span class="tag">Hyperbolic Geometry</span><span class="tag">fBm Noise</span><span class="tag">Volumetric Flow</span></div>
 </div>
 <div class="card">
@@ -296,7 +313,7 @@ footer.foot { padding:13px 0 0; border-top:1px solid var(--ink); }
 <a class="card-title" href="03-Riemann_dream.html">Riemann Dreams</a>
 </div>
 <div class="card-formula">θ = i×0.045 + sin(p)×2 · r = √i×0.55 + p×0.08  ·  300 primes · 60,000 pts</div>
-<div class="card-desc">수학의 오랜 수수께끼, 리만 가설의 격자를 하나의 공간으로 옮겨 놓았다. 300개의 소수를 씨앗 삼아 놓인 6만 개의 입자는 마우스와 기기의 기울기에 반응하고, 화면을 클릭하면 그 자리에서 중력의 물결이 번져 궤적 전체를 흔든다. <span class="card-interaction">Mouse · Gyro · Gravity Wave</span></div>
+<div class="card-desc"><a class="card-desc-link" href="03-Riemann_dream.html">수학의 오랜 수수께끼, 리만 가설의 격자를 하나의 공간으로 옮겨 놓았다. 300개의 소수를 씨앗 삼아 놓인 6만 개의 입자는 마우스와 기기의 기울기에 반응하고, 화면을 클릭하면 그 자리에서 중력의 물결이 번져 궤적 전체를 흔든다. <span class="card-interaction">Mouse · Gyro · Gravity Wave</span></a></div>
 <div class="card-footer"><span class="tag">Riemann Zeta</span><span class="tag">Prime Field</span><span class="tag">Interactive Gravity</span></div>
 </div>
 <div class="card">
@@ -305,7 +322,7 @@ footer.foot { padding:13px 0 0; border-top:1px solid var(--ink); }
 <a class="card-title" href="04-Quantum_sing.html">Quantum Singularity</a>
 </div>
 <div class="card-formula">θ = p·2π/φ² · r = √p×12  ·  3,000 primes · 400,000 pts · GLSL Gravity Lens</div>
-<div class="card-desc">황금각 137.5°와 페르마 나선을 따라 정렬된 40만 개의 입자가 중심의 특이점을 감싼다. 공간은 창세에서 열죽음에 이르는 다섯 국면을 끝없이 순환하고, 매 순간의 소수 인자가 화면 한쪽에 새겨진다. 블랙홀은 시점에 따라 중력 렌즈로 빛을 굴절시킨다. <span class="card-interaction">Pointer Parallax · Gaze Drift</span></div>
+<div class="card-desc"><a class="card-desc-link" href="04-Quantum_sing.html">황금각 137.5°와 페르마 나선을 따라 정렬된 40만 개의 입자가 중심의 특이점을 감싼다. 공간은 창세에서 열죽음에 이르는 다섯 국면을 끝없이 순환하고, 매 순간의 소수 인자가 화면 한쪽에 새겨진다. 블랙홀은 시점에 따라 중력 렌즈로 빛을 굴절시킨다. <span class="card-interaction">Pointer Parallax · Gaze Drift</span></a></div>
 <div class="card-footer"><span class="tag">Golden Angle</span><span class="tag">Prime Distribution</span><span class="tag">Gravitational Lens</span></div>
 </div>
 <div class="card">
@@ -314,7 +331,7 @@ footer.foot { padding:13px 0 0; border-top:1px solid var(--ink); }
 <a class="card-title" href="05-Dual_Galaxy.html">Dual Galaxy</a>
 </div>
 <div class="card-formula">r = √i×1.2 · θ = i×0.015 · Dual-Color Arms · 120,000 pts</div>
-<div class="card-desc">하나의 나선 위에 붉은 팔과 푸른 팔이 교차하며 감긴 이중 은하다. 12만 개의 입자가 두 색의 중력을 나눠 가진 채 중심을 돌고, 마우스는 은하를 기울인다. 화면을 터치하면 중심의 블랙홀이 잠시 부풀어 오르며 중력의 임계를 드러낸다. <span class="card-interaction">Mouse Tilt · Touch Core</span></div>
+<div class="card-desc"><a class="card-desc-link" href="05-Dual_Galaxy.html">하나의 나선 위에 붉은 팔과 푸른 팔이 교차하며 감긴 이중 은하다. 12만 개의 입자가 두 색의 중력을 나눠 가진 채 중심을 돌고, 마우스는 은하를 기울인다. 화면을 터치하면 중심의 블랙홀이 잠시 부풀어 오르며 중력의 임계를 드러낸다. <span class="card-interaction">Mouse Tilt · Touch Core</span></a></div>
 <div class="card-footer"><span class="tag">Binary Galaxy</span><span class="tag">Orbital Collision</span><span class="tag">Black Hole Core</span></div>
 </div>
 <div class="card">
@@ -323,7 +340,7 @@ footer.foot { padding:13px 0 0; border-top:1px solid var(--ink); }
 <a class="card-title" href="06-Lambert_Essential.html">Lambert Nebula: Essential</a>
 </div>
 <div class="card-formula">W₀(x) · FogExp2(density=0.0025)  ·  Mobile 45K / Desktop 95K pts</div>
-<div class="card-desc">방정식 w·eʷ = x의 해를 주는 람베르트 W 함수를 성운의 광학으로 옮긴 공간이다. 9만 5천 개의 성운 입자는 순방향으로, 1만 5천 개의 별은 역방향으로 자전하며 공간에 여러 겹의 깊이와 시간을 새긴다. 마우스를 따라 시점이 관성으로 흐른다. <span class="card-interaction">Inertia Camera Move</span></div>
+<div class="card-desc"><a class="card-desc-link" href="06-Lambert_Essential.html">방정식 w·eʷ = x의 해를 주는 람베르트 W 함수를 성운의 광학으로 옮긴 공간이다. 9만 5천 개의 성운 입자는 순방향으로, 1만 5천 개의 별은 역방향으로 자전하며 공간에 여러 겹의 깊이와 시간을 새긴다. 마우스를 따라 시점이 관성으로 흐른다. <span class="card-interaction">Inertia Camera Move</span></a></div>
 <div class="card-footer"><span class="tag">Lambert W</span><span class="tag">Optical Diffusion</span><span class="tag">Volumetric Nebula</span></div>
 </div>
 <div class="card">
@@ -332,7 +349,7 @@ footer.foot { padding:13px 0 0; border-top:1px solid var(--ink); }
 <a class="card-title" href="07-Lambert_Archive.html">Lambert Nebula: Archive</a>
 </div>
 <div class="card-formula">W₀ ∪ W₋₁  ·  6-Cluster Deep Field, 120,000 pts · AdditiveBlending</div>
-<div class="card-desc">발광 화면에서 색이 섞이는 원리인 가산 혼합(Additive Blending)을 시각화한 아카이브다. 람베르트 W 함수의 두 실수 가지(W₀·W₋₁)를 따라 여섯 성단에 흩어진 12만 개의 입자가 겹칠수록 빛이 합산되어 밝아진다. 중심의 광원을 클릭하면 그 핵이 순간 밝게 부풀어 오른다. <span class="card-interaction">Mouse Rotate · Core Pulse</span></div>
+<div class="card-desc"><a class="card-desc-link" href="07-Lambert_Archive.html">발광 화면에서 색이 섞이는 원리인 가산 혼합(Additive Blending)을 시각화한 아카이브다. 람베르트 W 함수의 두 실수 가지(W₀·W₋₁)를 따라 여섯 성단에 흩어진 12만 개의 입자가 겹칠수록 빛이 합산되어 밝아진다. 중심의 광원을 클릭하면 그 핵이 순간 밝게 부풀어 오른다. <span class="card-interaction">Mouse Rotate · Core Pulse</span></a></div>
 <div class="card-footer"><span class="tag">Lambert Branch</span><span class="tag">Additive Cosmology</span><span class="tag">Deep Field</span></div>
 </div>
 <div class="card">
@@ -341,7 +358,7 @@ footer.foot { padding:13px 0 0; border-top:1px solid var(--ink); }
 <a class="card-title" href="08-Lambert_nebu.html">Lambert Nebula</a>
 </div>
 <div class="card-formula">W₀(x) ∪ W₋₁(x)  ·  Audio-Reactive Input &amp; Branch Isolation, 60,000 pts</div>
-<div class="card-desc">마이크로 들어온 실시간 주파수가 3차원의 빛과 하나로 묶이는 공감각의 공간이다. 저음은 카메라의 공전 반지름과 중심핵의 크기를, 고음은 입자의 파동 변위를 실시간으로 흔든다. W₀·W₋₁ 두 가지를 따로 떼어 볼 수도 있다. <span class="card-interaction">Audio Reactive · Branch Isolation</span></div>
+<div class="card-desc"><a class="card-desc-link" href="08-Lambert_nebu.html">마이크로 들어온 실시간 주파수가 3차원의 빛과 하나로 묶이는 공감각의 공간이다. 저음은 카메라의 공전 반지름과 중심핵의 크기를, 고음은 입자의 파동 변위를 실시간으로 흔든다. W₀·W₋₁ 두 가지를 따로 떼어 볼 수도 있다. <span class="card-interaction">Audio Reactive · Branch Isolation</span></a></div>
 <div class="card-footer"><span class="tag">Audio Reactive</span><span class="tag">Spectral Space</span><span class="tag">Generative Soundfield</span></div>
 </div>
 <div class="card">
@@ -350,7 +367,7 @@ footer.foot { padding:13px 0 0; border-top:1px solid var(--ink); }
 <a class="card-title" href="09-Bessel_bloom.html">Bessel Bloom</a>
 </div>
 <div class="card-formula">J₀(x) ≈ √(2/πx)·cos(x−π/4)  ·  z = Σ J₀(dₙ·0.7 − 3t), 12,000 pts</div>
-<div class="card-desc">원통형 파동을 기술하는 제1종 베셀 함수로 짜인 간섭의 지대다. 화면을 누르면 그 자리에서 새로운 진원이 태어나 물결을 퍼뜨리고, 여러 진원이 겹치고 부딪히며 빛과 색의 간섭무늬를 만든다. 진원은 시간이 지나면 조용히 사그라든다. <span class="card-interaction">Touch to Bloom · Interference</span></div>
+<div class="card-desc"><a class="card-desc-link" href="09-Bessel_bloom.html">원통형 파동을 기술하는 제1종 베셀 함수로 짜인 간섭의 지대다. 화면을 누르면 그 자리에서 새로운 진원이 태어나 물결을 퍼뜨리고, 여러 진원이 겹치고 부딪히며 빛과 색의 간섭무늬를 만든다. 진원은 시간이 지나면 조용히 사그라든다. <span class="card-interaction">Touch to Bloom · Interference</span></a></div>
 <div class="card-footer"><span class="tag">Bessel Function</span><span class="tag">Wave Interference</span><span class="tag">Harmonic Propagation</span></div>
 </div>
 <div class="card">
@@ -359,7 +376,7 @@ footer.foot { padding:13px 0 0; border-top:1px solid var(--ink); }
 <a class="card-title" href="10-Lorenz_butt.html">Lorenz Butterfly</a>
 </div>
 <div class="card-formula">ẋ = σ(y−x) · ẏ = x(ρ−z)−y · ż = xy−βz  ·  σ=10, ρ=28, β=8/3</div>
-<div class="card-desc">장기적인 날씨 예측의 한계를 드러낸 로렌즈 방정식을 브라우저 안에서 실시간으로 푼다. 4천 개의 결정론적 입자가 나비 날개 모양의 궤도를 그리는 가운데, 화면을 누르면 계수 ρ가 순간 치솟았다가(28→36) 서서히 제자리로 돌아오며 궤도 전체를 교란한다. <span class="card-interaction">Click · Chaos Perturbation</span></div>
+<div class="card-desc"><a class="card-desc-link" href="10-Lorenz_butt.html">장기적인 날씨 예측의 한계를 드러낸 로렌즈 방정식을 브라우저 안에서 실시간으로 푼다. 4천 개의 결정론적 입자가 나비 날개 모양의 궤도를 그리는 가운데, 화면을 누르면 계수 ρ가 순간 치솟았다가(28→36) 서서히 제자리로 돌아오며 궤도 전체를 교란한다. <span class="card-interaction">Click · Chaos Perturbation</span></a></div>
 <div class="card-footer"><span class="tag">Lorenz Attractor</span><span class="tag">Chaotic Flow</span><span class="tag">Dynamical System</span></div>
 </div>
 <div class="card">
@@ -368,7 +385,7 @@ footer.foot { padding:13px 0 0; border-top:1px solid var(--ink); }
 <a class="card-title" href="11-Odyssey_Essential.html">Odyssey: Essential</a>
 </div>
 <div class="card-formula">ω(r) = 35/r  ·  Photon Ring &amp; Relativistic Drift · 320,000 pts</div>
-<div class="card-desc">구면좌표에 뿌린 6만 개의 별을 배경으로, 32만 개의 강착원반 입자가 ω(r)=35/r의 차등 각속도로 중심을 돈다. 중심과의 거리에 따라 입자는 흰빛에서 주황, 푸른빛으로 물들고, 광자 고리와 상대론적 제트가 중심을 감싼다. 마우스는 공전하는 시점을 유연하게 이끈다. <span class="card-interaction">Pointer Parallax · Autonomous Orbit</span></div>
+<div class="card-desc"><a class="card-desc-link" href="11-Odyssey_Essential.html">구면좌표에 뿌린 6만 개의 별을 배경으로, 32만 개의 강착원반 입자가 ω(r)=35/r의 차등 각속도로 중심을 돈다. 중심과의 거리에 따라 입자는 흰빛에서 주황, 푸른빛으로 물들고, 광자 고리와 상대론적 제트가 중심을 감싼다. 마우스는 공전하는 시점을 유연하게 이끈다. <span class="card-interaction">Pointer Parallax · Autonomous Orbit</span></a></div>
 <div class="card-footer"><span class="tag">Accretion Disk</span><span class="tag">Photon Ring</span><span class="tag">Relativistic Drift</span></div>
 </div>
 <div class="card">
@@ -377,7 +394,7 @@ footer.foot { padding:13px 0 0; border-top:1px solid var(--ink); }
 <a class="card-title" href="12-Odyssey_Archive.html">Odyssey: Archive</a>
 </div>
 <div class="card-formula">R<sub>s</sub> = 2GM / c<sup>2</sup>  ·  Kerr Drift: Δθ ∝ exp(-r/450) · 420,000 pts</div>
-<div class="card-desc">슈바르츠실트 반지름을 기준으로 삼고, 커 블랙홀의 프레임 드래깅을 예술적으로 결합한 확장형 아카이브다. 42만 개의 강착원반 입자가 중심에 가까울수록 휘어진 시공간에 끌려 빠르게 감기고(Δθ ∝ e^−r/450), 광자 고리와 아인슈타인 고리, 그리고 9만 개의 별이 우주 전체를 감싼다. 마우스는 궤도 시점을 관성으로 끈다. <span class="card-interaction">Pointer Parallax · Autonomous Orbit</span></div>
+<div class="card-desc"><a class="card-desc-link" href="12-Odyssey_Archive.html">슈바르츠실트 반지름을 기준으로 삼고, 커 블랙홀의 프레임 드래깅을 예술적으로 결합한 확장형 아카이브다. 42만 개의 강착원반 입자가 중심에 가까울수록 휘어진 시공간에 끌려 빠르게 감기고(Δθ ∝ e^−r/450), 광자 고리와 아인슈타인 고리, 그리고 9만 개의 별이 우주 전체를 감싼다. 마우스는 궤도 시점을 관성으로 끈다. <span class="card-interaction">Pointer Parallax · Autonomous Orbit</span></a></div>
 <div class="card-footer"><span class="tag">Kerr Geometry</span><span class="tag">Particle Cosmos</span><span class="tag">Einstein Ring</span></div>
 </div>
 <div class="card">
@@ -386,7 +403,7 @@ footer.foot { padding:13px 0 0; border-top:1px solid var(--ink); }
 <a class="card-title" href="13-Event_Horizon.html">Event Horizon</a>
 </div>
 <div class="card-formula">ω ∝ r<sup>−3/2</sup> · dτ = √(1−R<sub>s</sub>/r)·dt  ·  Gravitational Time Dilation · 150,000 pts</div>
-<div class="card-desc">케플러 회전(ω ∝ r^−3/2)으로 도는 15만 개의 강착원반 입자가 슈바르츠실트 블랙홀을 두른다. 다가오는 쪽은 상대론적 도플러 효과로 더 밝게 타오르고, 화면 전체는 중력 렌즈로 휘어진다. 지평선에 가까울수록 먼 관찰자에게 입자의 움직임은 느려져 보이고 붉게 어두워진다. 시점 반지름(R/R<sub>s</sub>)과 시간 지연(dτ/dt), 국면은 실시간으로 기록된다. 드래그로 시선을 끈다. <span class="card-interaction">Drag to Drift Gaze</span></div>
+<div class="card-desc"><a class="card-desc-link" href="13-Event_Horizon.html">케플러 회전(ω ∝ r^−3/2)으로 도는 15만 개의 강착원반 입자가 슈바르츠실트 블랙홀을 두른다. 다가오는 쪽은 상대론적 도플러 효과로 더 밝게 타오르고, 화면 전체는 중력 렌즈로 휘어진다. 지평선에 가까울수록 먼 관찰자에게 입자의 움직임은 느려져 보이고 붉게 어두워진다. 시점 반지름(R/R<sub>s</sub>)과 시간 지연(dτ/dt), 국면은 실시간으로 기록된다. 드래그로 시선을 끈다. <span class="card-interaction">Drag to Drift Gaze</span></a></div>
 <div class="card-footer"><span class="tag">Schwarzschild Metric</span><span class="tag">Gravitational Lensing</span><span class="tag">Keplerian Orbit</span></div>
 </div>
 <div class="card">
@@ -395,7 +412,7 @@ footer.foot { padding:13px 0 0; border-top:1px solid var(--ink); }
 <a class="card-title" href="14-Black_Voyage.html">Black Hole Voyage</a>
 </div>
 <div class="card-formula">Δθ ∝ e<sup>-r/260.0</sup> · SlitScan 108→138 · Entropy Collapse 145→180 · Cycle = 180s</div>
-<div class="card-desc">180초의 주기로 스스로 블랙홀을 향해 하강하는 자동 항해다. 108초 지점부터 슬릿스캔이 시간을 잘게 찢고, 145초 이후엔 엔트로피가 붕괴하며 신호가 소실된다. 제너러티브 신시사이저는 붕괴의 시간표를 따라 주파수를 낮추며 함께 무너지고, 마우스는 그 안에서 시선을 돌린다. <span class="card-interaction">Audio · Spatial Collapse</span></div>
+<div class="card-desc"><a class="card-desc-link" href="14-Black_Voyage.html">180초의 주기로 스스로 블랙홀을 향해 하강하는 자동 항해다. 108초 지점부터 슬릿스캔이 시간을 잘게 찢고, 145초 이후엔 엔트로피가 붕괴하며 신호가 소실된다. 제너러티브 신시사이저는 붕괴의 시간표를 따라 주파수를 낮추며 함께 무너지고, 마우스는 그 안에서 시선을 돌린다. <span class="card-interaction">Audio · Spatial Collapse</span></a></div>
 <div class="card-footer"><span class="tag">Entropy Collapse</span><span class="tag">Slit-Scan Space</span><span class="tag">Audio Singularity</span></div>
 </div>
 <div class="card">
@@ -404,7 +421,7 @@ footer.foot { padding:13px 0 0; border-top:1px solid var(--ink); }
 <a class="card-title" href="15-Kerr_Plasma.html">Kerr Plasma Cathedral</a>
 </div>
 <div class="card-formula">ds² = −(1 − r<sub>s</sub>r/ρ²)dt² − (2r<sub>s</sub>ra·sin²θ/ρ²)dtdϕ + …  ·  Audio Reactive Raymarching</div>
-<div class="card-desc">회전하는 블랙홀이 시공간을 비트는 방식 — 커 계량(Kerr Metric)을 실시간 레이마칭으로 풀어낸 에필로그다. 드래그하면 시점이 돌아가는 동시에 스핀이 사건지평선과 광자 고리를 비대칭으로 일그러뜨린다. 스피커나 마이크로 들어온 소리는 저음으로 플라스마를, 고음으로 광자 고리를 밝히고, 30초간 입력이 없으면 우주는 서서히 잠들다가 호킹 증발로 사라진다. <span class="card-interaction">Drag · Audio / Mic Input · Hawking Evaporation</span></div>
+<div class="card-desc"><a class="card-desc-link" href="15-Kerr_Plasma.html">회전하는 블랙홀이 시공간을 비트는 방식 — 커 계량(Kerr Metric)을 실시간 레이마칭으로 풀어낸 에필로그다. 드래그하면 시점이 돌아가는 동시에 스핀이 사건지평선과 광자 고리를 비대칭으로 일그러뜨린다. 스피커나 마이크로 들어온 소리는 저음으로 플라스마를, 고음으로 광자 고리를 밝히고, 30초간 입력이 없으면 우주는 서서히 잠들다가 호킹 증발로 사라진다. <span class="card-interaction">Drag · Audio / Mic Input · Hawking Evaporation</span></a></div>
 <div class="card-footer"><span class="tag">Kerr Metric</span><span class="tag">Frame Dragging</span><span class="tag">Hawking Evaporation</span></div>
 </div>
 <div class="card reference-card">
@@ -413,7 +430,7 @@ footer.foot { padding:13px 0 0; border-top:1px solid var(--ink); }
 <a class="card-title" href="operator.html">Operator's Codex</a>
 </div>
 <div class="card-formula">홈페이지 운영 설명서 · Site Manual &amp; Operations</div>
-<div class="card-desc">관람 동선과 조작법, 작품 추가·배포 절차를 정리한 운영 문서다.</div>
+<div class="card-desc"><a class="card-desc-link" href="operator.html">관람 동선과 조작법, 작품 추가·배포 절차를 정리한 운영 문서다.</a></div>
 <div class="card-footer"><span class="tag">Site Manual</span><span class="tag">Visitor Guide</span><span class="tag">Operations</span></div>
 </div>
 <div class="card reference-card">
@@ -422,7 +439,7 @@ footer.foot { padding:13px 0 0; border-top:1px solid var(--ink); }
 <a class="card-title" href="technical.html">Technical Specifications</a>
 </div>
 <div class="card-formula">작품별 기술 설명 · Rendering · Math · Physics</div>
-<div class="card-desc">15개 작품의 렌더링·수학·물리 모델과 셰이더 구성을 소스 코드 기준으로 정리한 기술 문서다.</div>
+<div class="card-desc"><a class="card-desc-link" href="technical.html">15개 작품의 렌더링·수학·물리 모델과 셰이더 구성을 소스 코드 기준으로 정리한 기술 문서다.</a></div>
 <div class="card-footer"><span class="tag">Tech Specs</span><span class="tag">Shaders</span><span class="tag">Source-Verified</span></div>
 </div>
 <div class="card reference-card">
@@ -431,7 +448,7 @@ footer.foot { padding:13px 0 0; border-top:1px solid var(--ink); }
 <a class="card-title" href="lexicon.html">Abyssal Lexicon</a>
 </div>
 <div class="card-formula">작품 용어 주석 · Glossary of Terms</div>
-<div class="card-desc">15개 작품의 물리·수학·그래픽 용어 31개를 쉬운 언어로 정리한 주석이다.</div>
+<div class="card-desc"><a class="card-desc-link" href="lexicon.html">15개 작품의 물리·수학·그래픽 용어 31개를 쉬운 언어로 정리한 주석이다.</a></div>
 <div class="card-footer"><span class="tag">Glossary</span><span class="tag">Annotations</span><span class="tag">31 Terms</span></div>
 </div>
 </div>
@@ -440,7 +457,7 @@ footer.foot { padding:13px 0 0; border-top:1px solid var(--ink); }
 <div class="foot-grid">
 <div class="sig"><span class="thin">2026:</span> a digital odyssey</div>
 <div class="meta">
-김건우교수 제19회 개인전 · The Archive<br>
+김건우 교수 제19회 개인전 · The Archive<br>
 2026.08.24–09.05 · 갤러리한빛<br>
 <span class="seed">Universe <span id="universe-label"></span></span>
 </div>
